@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.hidden
+{
+	display: none;
+}
+
+$companyColor: #333;
+
+section
+{
+	background: $companyColor;
+}

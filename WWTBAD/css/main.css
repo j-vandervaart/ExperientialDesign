@@ -1,0 +1,312 @@
+/* CSS Document */
+.hidden {
+  display: none; }
+
+body {
+	margin: 0 auto;
+	font-family: proxima-nova, sans-serif;
+	background: linear-gradient(90deg, #0b1144, #12659d);
+	background-size: 500% 500%;
+
+	-webkit-animation: backgroundanimation 4s ease infinite;
+	-moz-animation: backgroundanimation 4s ease infinite;
+	animation: backgroundanimation 4s ease infinite;
+}
+
+@-webkit-keyframes backgroundanimation {
+	    0%{background-position:5% 0%}
+	    50%{background-position:96% 100%}
+	    100%{background-position:5% 0%}
+	}
+	@-moz-keyframes backgroundanimation {
+	    0%{background-position:5% 0%}
+	    50%{background-position:96% 100%}
+	    100%{background-position:5% 0%}
+	}
+	@keyframes backgroundanimation {
+	    0%{background-position:5% 0%}
+	    50%{background-position:96% 100%}
+	    100%{background-position:5% 0%}
+	}
+
+body p {
+	color: #FFFFFF;
+}
+
+#content {
+	text-align: left;
+	margin-left: 50px;
+	font-size: 23px;
+	margin-bottom: 75px;
+}
+
+/*img.timer {
+    max-height: 10%;
+    max-width: 10%;
+}*/
+
+/*OPENING*/
+
+img.proximaLogoLarge {
+    max-height: 50%;
+    max-width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 40px;
+    width: 50%;
+}
+
+/*BARCODE*/
+
+img.proximaLogoSmall {
+	max-height: 10%;
+    max-width: 10%;
+    padding-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scanBarCode {
+	text-align: center;
+	font-size: 40px;
+	margin-top: 150px;
+}
+
+.barCode {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 30%;
+    max-width: 30%;
+  	margin-top: 30px;
+}
+
+/*INSTRUCTIONS*/
+
+.instructions {
+	text-align: center;
+	font-size: 25px;
+	margin-top: 150px;
+	margin-left: 180px;
+	margin-right: 180px;
+}
+
+.pressButton {
+	color: #3D4849;
+	font-size: 25px;
+	text-align: center;
+	margin-top: 50px;
+}
+
+img.questionExample {
+    max-height: 50%;
+    max-width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+/*INSTRUCTIONS 2*/
+
+img.instructionsScore {
+	max-height: 90%;
+    max-width: 90%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*TIMER INSTRUCTIONS*/
+
+img.instructionsScore {
+	max-height: 80%;
+    max-width: 80%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*LIFE LINE INSTRUCTIONS*/
+
+.lifeLine {
+	text-align: center;
+	font-size: 25px;
+	margin-top: 150px;
+	margin-bottom: 50px;
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+.orange {
+	max-height: 75%;
+    max-width: 75%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*PRESS BUTTON START*/
+
+.pressButtonStart {
+	font-size: 70px;
+	text-align: center;
+	padding-top: 240px;
+}
+
+/*WINNER*/
+
+.winner {
+	display: inline-block;
+	font-size: 80px;
+	color: #FB8F13;
+	text-align: center;
+	margin-top: 200px;
+}
+
+img.winnerDeveloper {
+	max-height: 60%;
+	max-width: 60%;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.congratulations {
+	margin-top: 30px;
+	font-size: 25px;
+	text-align: center;
+}
+
+img.triangle {
+	display: inline-block;
+	text-align: center;
+	max-height: 20%;
+	max-width: 20%;
+	margin-left: 
+	margin-left: auto;
+    margin-right: auto;
+}
+
+#p9 {
+	text-align: center;
+}
+
+/*GIFT CARD*/
+
+#p10 {
+	text-align: center;
+	padding-top: 100px;
+}
+
+img.GC {
+	display: inline-block;
+	max-height: 40%;
+	max-width: 40%;
+}
+
+.prize {
+	font-size: 50px;
+	color: #FFFFFF;
+	padding-top: 30px;
+	margin-bottom: 30px;
+}
+
+.pleaseWait {
+	font-size: 30px;
+}
+
+img.triangleGC {
+	display: inline-block;
+	text-align: center;
+	max-height: 20%;
+	max-width: 20%;
+	margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 125px;
+    margin-right: 60px;
+    margin-left: 60px;
+}
+
+/* YOU LOSE */
+
+#p11 {
+	text-align: center;
+}
+
+
+
+
+
+img.audience {
+	display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 10%;
+    max-width: 10%;
+    padding-left: 50px;
+    padding-right: 25px;
+}
+
+img.fiftyfifty {
+	display: inline-block;
+    margin-left: 0;
+    margin-right: 0;
+    max-height: 10%;
+    max-width: 10%;
+}
+
+img.mainlogo {
+	display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 25%;
+    max-width: 25%;
+    padding-left: 80px;
+    margin-top: 80px;
+}
+
+p.levels {
+	display: inline-block;
+}
+
+img.questionsField {
+	display: block;
+    margin-left: 0;
+    margin-right: 0;
+    max-height: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+#level {
+	display: inline-block;
+	color:#FFFFFF;
+	margin-left: 140px;
+}
+
+#points {
+	display: inline-block;
+	color:#FFFFFF;
+	padding-left: 30px;
+}
+
+.levelNumber {
+	display: block;
+	color: #E8A100;
+}
+
+.pointsNumber {
+	display: block;
+	color: #E8A100;
+}
+
+
+
+/*# sourceMappingURL=main.css.map */
