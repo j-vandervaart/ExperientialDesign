@@ -25,6 +25,9 @@ function renderQuestion(){
 		stepper.cw().step(5000, function() {
     		console.log("done");
    		});
+   		stepper2.cw().step(5000, function() {
+    		console.log("done");
+   		});
 		return false;
 	}
 	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
@@ -105,7 +108,7 @@ function renderQuestion(){
 				_("showRight").innerHTML = "";
 				return false;
 			}
-			setTimeout(renderQuestion, 3000);
+			setTimeout(renderQuestion, 1000);
 	}, 10000);
 }
 
@@ -136,6 +139,7 @@ function renderQuestion(){
 // window.addEventListener("load", renderQuestion, false);
 renderQuestion();
 
+var buttonblack2 = new five.Button(1);
 
 var buttonred = new five.Button(2);
 
@@ -150,7 +154,13 @@ var buttongreen = new five.Button(5);
 var stepper = new five.Stepper({
     type: five.Stepper.TYPE.FOUR_WIRE,
     stepsPerRev: 150,
-    pins: [ 8, 9, 10, 11]
+    pins: [6,7,8,9]
+  });
+
+var stepper2 = new five.Stepper({
+    type: five.Stepper.TYPE.FOUR_WIRE,
+    stepsPerRev: 150,
+    pins: [10,11,12,13]
   });
 
 // function moveCC() {
@@ -161,6 +171,10 @@ var stepper = new five.Stepper({
 
 // button.on("press", function() {
 //  info.innerHTML += "button pushed. ";
+
+  buttonblack2.on("hold", function() {
+  	console.log('3453453');
+  });
 
   buttonred.on("hold", function() {
     // buttonInfo.innerHTML += "Red button pushed";
