@@ -7,7 +7,7 @@ var questions = [
     [
         ["What is an advantage of having external CSS?", "It is faster.", "You can edit one file to edit the base of every page which uses it.", "It is less confusing.", "There are no advantages.", "B"],
         ["What are Sass, Stylus, and LESS", "Types of CSS", "CSS pre-processors", "Responsive CSS grid systems", "CSS frameworks", "B"],
-        ["What is NOT an HTML5 element?", "section", "canvas", "audio", "block", "C"]
+        ["What is NOT an HTML5 element?", "section", "canvas", "audio", "block", "D"]
     ],
     [
         ["What is a problem with a single page app?", "May not have enough pages", "Can have HTML issues", "Can cause SEO issues", "May cause W3C validation errors", "C"],

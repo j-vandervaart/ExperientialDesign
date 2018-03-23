@@ -14,17 +14,6 @@ process.__defineGetter__('stdin', function() {
   return process.__stdin
 })
 
-function SpeedStart() {
-  secondary.src='sounds/speed/question/start.mp3';
-  secondary.volume = 1;
-  secondary.load(); 
-  secondary.play();
-
-  // setTimeout(function(){SpeedRound(); }, 5000);
-}
-
-SpeedStart();
-
 var pageNumber = 0;
 
 var game = document.querySelector("#mainGamePlay");
@@ -131,16 +120,16 @@ var page8 = `<div id="p8">
 
 	<!--POINTS-->
 	<div id="points">
-	<div class="pointsNumberUp">1 MILLION PTS</div>
-	<div class="pointsNumber">500,000 pts</div>
-	<div class="pointsNumber">250,000 pts</div>
-	<div class="pointsNumberUp">125,000 pts</div>
-	<div class="pointsNumber">32,000 pts</div>
-	<div class="pointsNumber">8000 pts</div>
-	<div class="pointsNumberUp">1000 pts</div>
-	<div class="pointsNumber">500 pts</div>
-	<div class="pointsNumber">300 pts</div>
-	<div class="pointsNumberUp">100 pts</div></div>
+	<div class="cats pointsNumberUp">1 MILLION PTS</div>
+	<div class="cats pointsNumber">500,000 pts</div>
+	<div class="cats pointsNumber">250,000 pts</div>
+	<div class="cats pointsNumberUp">125,000 pts</div>
+	<div class="cats pointsNumber">32,000 pts</div>
+	<div class="cats pointsNumber">8000 pts</div>
+	<div class="cats pointsNumberUp">1000 pts</div>
+	<div class="cats pointsNumber">500 pts</div>
+	<div class="cats pointsNumber">300 pts</div>
+	<div class="cats pointsNumberUp">100 pts</div></div>
  
 	</div>
 
@@ -284,6 +273,7 @@ loadpage2: function() {
 
 loadpage3: function() {
   	game.innerHTML = page3;
+  	SpeedStart();
   	// mainGamePlay.removeEventListener("click", loadpage3, false);
   	// mainGamePlay.addEventListener("click", loadpage4, false);
 },
@@ -319,6 +309,8 @@ loadpageIntroVideo: function() {
 },
 
 loadpage8: function() {
+	stopSound();
+	SpeedStart();
   	game.innerHTML = page8;
   	var winner = [];
 	var cat1 = document.querySelector('.st5');
@@ -332,13 +324,19 @@ loadpage8: function() {
 
 	// dog();
 	var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
-
+	var floatingBox = 9;
+	var cats = document.querySelectorAll(".cats");
 
 	function _(x){
 		return document.getElementById(x);
 	}
 
 	function renderQuestion(){
+		for(var i = 0; i < cats.length; i++) {
+			cats[i].style.backgroundColor = "transparent";
+		}
+		cats[floatingBox].style.backgroundColor = "orange";
+		cats[floatingBox].style.color = "white";
 		test = _("test");
 		var text1 = document.querySelector("#text1");
 
@@ -350,6 +348,7 @@ loadpage8: function() {
 			_("test_status").innerHTML = "WINNER!";
 			pos = 0;
 			correct = 0;
+			floatingBox = 0;
 			stepper.cw().step(5000, function() {
     			console.log("done");
    			});
@@ -434,6 +433,8 @@ loadpage8: function() {
 					winner[dog].style.fill = "green";
 					_("showRight").innerHTML = "right";
 				}
+				floatingBox--;
+				SpeedWin();
 				pos++;
 			}else if(choice != questions[pos][cat][5]){
 				console.log("ugh!");
@@ -448,8 +449,10 @@ loadpage8: function() {
 				pos = 0;
 				correct = 0;
 				pageNumber = 0;
+				floatingBox = 0;
 				setTimeout(functions[arr[0]], 4000);
 				_("showRight").innerHTML = "";
+				SpeedLose();
 
 				return false;
 			}
@@ -478,7 +481,7 @@ loadpage8: function() {
 		board: b1
 	});
 
-  	buttonred.on("down", function() {
+  	buttonred.on("up", function() {
     // buttonInfo.innerHTML += "Red button pushed";
     //console.log('red');
     // stepper.cw().step(5000, function() {
@@ -492,7 +495,7 @@ loadpage8: function() {
     	one.checked = true;
   	});
 
-  	buttonblue.on("down", function() {
+  	buttonblue.on("up", function() {
     // buttonInfo.innerHTML += "Blue button pushed";
     // //console.log('blue');
     	for(var i = 0; i < winner.length; i++) {
@@ -503,7 +506,7 @@ loadpage8: function() {
     	two.checked = true;
   	});
 
-  	buttonyellow.on("down", function() {
+  	buttonyellow.on("up", function() {
     // buttonInfo.innerHTML += "Yellow button pushed";
     // //console.log('yellow');
     	for(var i = 0; i < winner.length; i++) {
@@ -514,7 +517,7 @@ loadpage8: function() {
     	three.checked = true;
   	});
 
-  	buttongreen.on("down", function() {
+  	buttongreen.on("up", function() {
     // buttonInfo.innerHTML += "Green button pushed";
     // //console.log('green');
     	for(var i = 0; i < winner.length; i++) {
@@ -558,11 +561,11 @@ var stepper2 = new five.Stepper({
 // }
 
 
-  buttonblack1.on("down", function() {
+  buttonblack1.on("up", function() {
   	functions[arr[pageNumber++]]();
   });
 
-  buttonblack2.on("down", function() {
+  buttonblack2.on("up", function() {
   	console.log("black2");
   });
 

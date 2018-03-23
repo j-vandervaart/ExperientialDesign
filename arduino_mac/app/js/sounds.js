@@ -243,6 +243,11 @@ function FiftyFiftyLifeline() {
 }
 
 
+function stopSound() {
+  primary.pause();
+  secondary.pause();
+}
+
 
 
 //ESSENTIAL SOUND AUDIO 
