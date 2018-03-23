@@ -326,6 +326,10 @@ loadpage8: function() {
 	var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
 	var floatingBox = 9;
 	var cats = document.querySelectorAll(".cats");
+	var servoSwitch = 0;
+	var servo = [];
+	servo.push(stepper, stepper2);
+	console.log(servo);
 
 	function _(x){
 		return document.getElementById(x);
@@ -349,12 +353,12 @@ loadpage8: function() {
 			pos = 0;
 			correct = 0;
 			floatingBox = 0;
-			stepper.cw().step(5000, function() {
-    			console.log("done");
-   			});
-   			stepper2.cw().step(5000, function() {
-    			console.log("done");
-   			});
+			// stepper.cw().step(5000, function() {
+   //  			console.log("done");
+   // 			});
+   			// stepper2.cw().step(5000, function() {
+    		// 	console.log("done");
+   			// });
 			return false;
 		}
 	
@@ -424,6 +428,9 @@ loadpage8: function() {
 			// 	}
 			// }
 			if(choice == questions[pos][cat][5]){
+				servo[servoSwitch].cw().step(5000, function() {
+    				console.log("done");
+   				});
 				correct++;
 				// console.log(winner);
 				for(var i = 0; i < winner.length; i++) {
@@ -434,6 +441,7 @@ loadpage8: function() {
 					_("showRight").innerHTML = "right";
 				}
 				floatingBox--;
+				servoSwitch++;
 				SpeedWin();
 				pos++;
 			}else if(choice != questions[pos][cat][5]){
