@@ -14,6 +14,17 @@ process.__defineGetter__('stdin', function() {
   return process.__stdin
 })
 
+function SpeedStart() {
+  secondary.src='sounds/speed/question/start.mp3';
+  secondary.volume = 1;
+  secondary.load(); 
+  secondary.play();
+
+  // setTimeout(function(){SpeedRound(); }, 5000);
+}
+
+SpeedStart();
+
 var pageNumber = 0;
 
 var game = document.querySelector("#mainGamePlay");
@@ -211,15 +222,17 @@ var page8 = `<div id="p8">
 		s24.8-26.7,24.8-26.7L-2156.6,4974L-2156.6,4974z"/>
 </g>
 <rect x="391" y="32.4" class="st6" width="1188.2" height="110"/>
-<text transform="matrix(1 0 0 1 391.0004 66.4105)"><tspan x="0" y="0" class="st0 st7 st8 cats">This is question 1</tspan><tspan x="0" y="61.2" class="st0 st7 st8">This is question 1 field 2</tspan></text>
+<text id="text1" width="200" transform="matrix(1 0 0 1 391.0004 66.4105)"><tspan x="0" y="0" class="st0 st7 st8 cats">This is question 1</tspan><tspan x="0" y="61.2" class="st0 st7 st8">This is question 1 field 2</tspan></text>
 <rect x="398" y="226" class="st6" width="792" height="200"/>
-<text transform="matrix(1 0 0 1 398 250.0117)" class="st0 st7 st9">Answer A</text>
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="46" y="22" width="400">    
+                    <div id="text2" style="font-size: 25px; color: white">I'm a div inside a SVG.</div>                
+            </foreignobject>
 <rect x="398" y="337" class="st6" width="792" height="200"/>
-<text transform="matrix(1 0 0 1 398 361.0117)" class="st0 st7 st9">Answer C</text>
+<text id="text3" transform="matrix(1 0 0 1 398 361.0117)" class="st0 st7 st9">Answer C</text>
 <rect x="1043.8" y="226" class="st6" width="792" height="200"/>
-<text transform="matrix(1 0 0 1 1043.7507 250.0117)" class="st0 st7 st9">Answer B</text>
+<text id="text4" transform="matrix(1 0 0 1 1043.7507 250.0117)" class="st0 st7 st9">Answer B</text>
 <rect x="1043.8" y="339" class="st6" width="792" height="200"/>
-<text transform="matrix(1 0 0 1 1043.7507 363.0117)" class="st0 st7 st9">Answer D</text>
+<text id="text5" transform="matrix(1 0 0 1 1043.7507 363.0117)" class="st0 st7 st9">Answer D</text>
 </svg>
 
 </div>
@@ -313,58 +326,66 @@ loadpage8: function() {
 	var cat3 = document.querySelector('.st2');
 	var cat4 = document.querySelector('.st4');
 	winner.push(cat1, cat2, cat3, cat4);
-	function dog() {
-		console.log(winner);
-	}
+	// function dog() {
+	// 	console.log(winner);
+	// }
 
-	dog();
+	// dog();
 	var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
 
 
-function _(x){
-	return document.getElementById(x);
-}
-
-function renderQuestion(){
-	test = _("test");
-	for(var i = 0; i < winner.length; i++) {
-		winner[i].style.fill = "url(#Path_8_1_)";
-    }
-	if(pos >= questions.length){
-		test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
-		_("test_status").innerHTML = "WINNER!";
-		pos = 0;
-		correct = 0;
-		stepper.cw().step(5000, function() {
-    		console.log("done");
-   		});
-   		stepper2.cw().step(5000, function() {
-    		console.log("done");
-   		});
-		return false;
+	function _(x){
+		return document.getElementById(x);
 	}
-	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
-	var cat = Math.floor(Math.random()*3);
-	question = questions[pos][cat][0];
-	chA = questions[pos][cat][1];
-	chB = questions[pos][cat][2];
-	chC = questions[pos][cat][3];
-	chD = questions[pos][cat][4];
-	document.querySelector("#question").innerHTML = question;
+
+	function renderQuestion(){
+		test = _("test");
+		var text1 = document.querySelector("#text1");
+
+		for(var i = 0; i < winner.length; i++) {
+			winner[i].style.fill = "url(#Path_8_1_)";
+    	}
+		if(pos >= questions.length){
+			test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+			_("test_status").innerHTML = "WINNER!";
+			pos = 0;
+			correct = 0;
+			stepper.cw().step(5000, function() {
+    			console.log("done");
+   			});
+   			stepper2.cw().step(5000, function() {
+    			console.log("done");
+   			});
+			return false;
+		}
+	
+		_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+		var cat = Math.floor(Math.random()*3);
+		question = questions[pos][cat][0];
+		chA = questions[pos][cat][1];
+		chB = questions[pos][cat][2];
+		chC = questions[pos][cat][3];
+		chD = questions[pos][cat][4];
+		text1.innerHTML = question;
+		text2.innerHTML = chA;
+		text4.innerHTML = chB;
+		text3.innerHTML = chC;
+		text5.innerHTML = chD;
+	// document.querySelector("#question").innerHTML = question;
 	// winner[0].innerHTML = chA;
 	// winner[1].innerHTML = chB;
 	// winner[2].innerHTML = chC;
 	// winner[3].innerHTML = chD;
-	test.innerHTML = "<h3>"+question+"</h3>";
-	test.innerHTML += "<input id='one0' type='radio' name='choices' value='A'> "+chA+"<br>";
-	test.innerHTML += "<input id='one1' type='radio' name='choices' value='B'> "+chB+"<br>";
-	test.innerHTML += "<input id='one2' type='radio' name='choices' value='C'> "+chC+"<br>";
-	test.innerHTML += "<input id='one3' type='radio' name='choices' value='D'> "+chD+"<br><br>";
+		test.innerHTML = "<h3>"+question+"</h3>";
+		test.innerHTML += "<input id='one0' type='radio' name='choices' value='A'> "+chA+"<br>";
+		test.innerHTML += "<input id='one1' type='radio' name='choices' value='B'> "+chB+"<br>";
+		test.innerHTML += "<input id='one2' type='radio' name='choices' value='C'> "+chC+"<br>";
+		test.innerHTML += "<input id='one3' type='radio' name='choices' value='D'> "+chD+"<br><br>";
 	// test.innerHTML += "<button id='tested'>Submit Answer</button>";
 
 
-	setTimeout(function() {
-			console.log(cat);
+		setTimeout(function() {
+			console.log();
 			// choices = document.getElementsByName("choices");
 			var dog1 = document.querySelector("#one0");
 			var dog2 = document.querySelector("#one1");
@@ -390,7 +411,7 @@ function renderQuestion(){
 			}else{
 				pos = 0;
 				correct = 0;
-				console.log
+				choice = null;
 				_("showRight").innerHTML = "no answer";
 				setTimeout(renderQuestion, 5000);
 				return;
@@ -405,6 +426,7 @@ function renderQuestion(){
 			// }
 			if(choice == questions[pos][cat][5]){
 				correct++;
+				// console.log(winner);
 				for(var i = 0; i < winner.length; i++) {
     			winner[i].style.fill = "url(#Path_8_1_)";
     			}	
@@ -413,239 +435,97 @@ function renderQuestion(){
 					_("showRight").innerHTML = "right";
 				}
 				pos++;
-			}else {
-				_("showRight").innerHTML = "wrong";
+			}else if(choice != questions[pos][cat][5]){
+				console.log("ugh!");
+				// _("showRight").innerHTML = "wrong";
+				// console.log(winner);
+				for(var i = 0; i < winner.length; i++) {
+					winner[i].style.fill = "url(#Path_8_1_)";
+    			}	
+				winner[dog].style.fill = "red";
+				console.log(dog);
+					// _("showRight").innerHTML = "WRONG";
 				pos = 0;
 				correct = 0;
-				renderQuestion();
+				pageNumber = 0;
+				setTimeout(functions[arr[0]], 4000);
 				_("showRight").innerHTML = "";
+
 				return false;
 			}
 			setTimeout(renderQuestion, 4000);
-	}, 8000);
-}
+		}, 8000);
+	}
 	renderQuestion();
 
 	var buttonred = new five.Button({
-	pin:2,
-	board: b1
-});
+		pin:2,
+		board: b1
+	});
 
-var buttonblue = new five.Button({
-	pin:3,
-	board: b1
-});
+	var buttonblue = new five.Button({
+		pin:3,
+		board: b1
+	});
 
-var buttonyellow = new five.Button({
-	pin:4,
-	board: b1
-});
+	var buttonyellow = new five.Button({
+		pin:4,
+		board: b1
+	});
 
-var buttongreen = new five.Button({
-	pin:5,
-	board: b1
-});
+	var buttongreen = new five.Button({
+		pin:5,
+		board: b1
+	});
 
-  buttonred.on("hold", function() {
+  	buttonred.on("down", function() {
     // buttonInfo.innerHTML += "Red button pushed";
     //console.log('red');
     // stepper.cw().step(5000, function() {
     // console.log("done");
     // });
-    for(var i = 0; i < winner.length; i++) {
-    	winner[i].style.fill = "url(#Path_8_1_)";
-    }
-    winner[0].style.fill = "yellow";
-    var one = document.querySelector("#one0");
-    one.checked = true;
-  });
+    	for(var i = 0; i < winner.length; i++) {
+    		winner[i].style.fill = "url(#Path_8_1_)";
+    	}
+    	winner[0].style.fill = "yellow";
+    	var one = document.querySelector("#one0");
+    	one.checked = true;
+  	});
 
-  buttonblue.on("hold", function() {
+  	buttonblue.on("down", function() {
     // buttonInfo.innerHTML += "Blue button pushed";
     // //console.log('blue');
-    for(var i = 0; i < winner.length; i++) {
-    	winner[i].style.fill = "url(#Path_8_1_)";
-    }
-    winner[1].style.fill = "yellow";
-    var two = document.querySelector("#one1");
-    two.checked = true;
-  });
+    	for(var i = 0; i < winner.length; i++) {
+    		winner[i].style.fill = "url(#Path_8_1_)";
+    	}
+    	winner[1].style.fill = "yellow";
+    	var two = document.querySelector("#one1");
+    	two.checked = true;
+  	});
 
-  buttonyellow.on("hold", function() {
+  	buttonyellow.on("down", function() {
     // buttonInfo.innerHTML += "Yellow button pushed";
     // //console.log('yellow');
-    for(var i = 0; i < winner.length; i++) {
-    	winner[i].style.fill = "url(#Path_8_1_)";
-    }
-    winner[2].style.fill = "yellow";
-    var three = document.querySelector("#one2");
-    three.checked = true;
-  });
+    	for(var i = 0; i < winner.length; i++) {
+    		winner[i].style.fill = "url(#Path_8_1_)";
+    	}
+    	winner[2].style.fill = "yellow";
+    	var three = document.querySelector("#one2");
+    	three.checked = true;
+  	});
 
-  buttongreen.on("hold", function() {
+  	buttongreen.on("down", function() {
     // buttonInfo.innerHTML += "Green button pushed";
     // //console.log('green');
-    for(var i = 0; i < winner.length; i++) {
-    	winner[i].style.fill = "url(#Path_8_1_)";
-    }
-    winner[3].style.fill = "yellow";
-    var four = document.querySelector("#one3");
-    four.checked = true;
-  });
+    	for(var i = 0; i < winner.length; i++) {
+    		winner[i].style.fill = "url(#Path_8_1_)";
+    	}
+    	winner[3].style.fill = "yellow";
+    	var four = document.querySelector("#one3");
+    	four.checked = true;
+  	});
+	}
 }
-}
-
-	// function board1(){
-	// 	var led= new five.Led({
-	// 		pin:13,
-	// 		board: b1
-	// 	});
-	// 	led.blink();
-	// }
-
-	// function board2(){
-	// 	var led2 = new five.Led({
-	// 		pin:13,
-	// 		board: b2
-	// 	});
-	// 	led.on();
-	// }
-
-	// board1();
-	// board2();
-// var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
-
-
-// function _(x){
-// 	return document.getElementById(x);
-// }
-
-// function renderQuestion(){
-// 	test = _("test");
-// 	for(var i = 0; i < winner.length; i++) {
-// 		winner[i].style.fill = "url(#Path_8_1_)";
-//     }
-// 	if(pos >= questions.length){
-// 		test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
-// 		_("test_status").innerHTML = "WINNER!";
-// 		pos = 0;
-// 		correct = 0;
-// 		stepper.cw().step(5000, function() {
-//     		console.log("done");
-//    		});
-//    		stepper2.cw().step(5000, function() {
-//     		console.log("done");
-//    		});
-// 		return false;
-// 	}
-// 	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
-// 	var cat = Math.floor(Math.random()*3);
-// 	question = questions[pos][cat][0];
-// 	chA = questions[pos][cat][1];
-// 	chB = questions[pos][cat][2];
-// 	chC = questions[pos][cat][3];
-// 	chD = questions[pos][cat][4];
-// 	document.querySelector("#question").innerHTML = question;
-// 	// winner[0].innerHTML = chA;
-// 	// winner[1].innerHTML = chB;
-// 	// winner[2].innerHTML = chC;
-// 	// winner[3].innerHTML = chD;
-// 	test.innerHTML = "<h3>"+question+"</h3>";
-// 	test.innerHTML += "<input id='one0' type='radio' name='choices' value='A'> "+chA+"<br>";
-// 	test.innerHTML += "<input id='one1' type='radio' name='choices' value='B'> "+chB+"<br>";
-// 	test.innerHTML += "<input id='one2' type='radio' name='choices' value='C'> "+chC+"<br>";
-// 	test.innerHTML += "<input id='one3' type='radio' name='choices' value='D'> "+chD+"<br><br>";
-// 	// test.innerHTML += "<button id='tested'>Submit Answer</button>";
-
-
-// 	setTimeout(function() {
-// 			console.log(cat);
-// 			// choices = document.getElementsByName("choices");
-// 			var dog1 = document.querySelector("#one0");
-// 			var dog2 = document.querySelector("#one1");
-// 			var dog3 = document.querySelector("#one2");
-// 			var dog4 = document.querySelector("#one3");
-// 			// for(var i = 0; i<choices.length; i++){
-// 			if(dog1.checked){
-// 				choice = dog1.value;
-// 				console.log('one');
-// 				var dog = dog1.id.charAt(3);
-// 			}else if (dog2.checked) {
-// 				choice = dog2.value;
-// 				console.log('two');
-// 				var dog = dog2.id.charAt(3);
-// 			}else if (dog3.checked) {
-// 				choice = dog3.value;
-// 				console.log('three');
-// 				var dog = dog3.id.charAt(3);
-// 			}else if (dog4.checked) {
-// 				choice = dog4.value;
-// 				console.log('four');
-// 				var dog = dog4.id.charAt(3);
-// 			}else{
-// 				pos = 0;
-// 				correct = 0;
-// 				console.log
-// 				_("showRight").innerHTML = "no answer";
-// 				setTimeout(renderQuestion, 5000);
-// 				return;
-// 			}
-// 			// 	}else{
-// 			// 		_("showRight").innerHTML = "no answer";
-// 			// 		pos = 0;
-// 			// 		correct = 0;
-// 			// 		setTimeout(renderQuestion, 5000);
-// 			// 		return;
-// 			// 	}
-// 			// }
-// 			if(choice == questions[pos][cat][5]){
-// 				correct++;
-// 				for(var i = 0; i < winner.length; i++) {
-//     			winner[i].style.fill = "url(#Path_8_1_)";
-//     			}	
-//     			if(dog) {	
-// 					winner[dog].style.fill = "green";
-// 					_("showRight").innerHTML = "right";
-// 				}
-// 				pos++;
-// 			}else {
-// 				_("showRight").innerHTML = "wrong";
-// 				pos = 0;
-// 				correct = 0;
-// 				renderQuestion();
-// 				_("showRight").innerHTML = "";
-// 				return false;
-// 			}
-// 			setTimeout(renderQuestion, 1000);
-// 	}, 10000);
-// }
-
-// function checkAnswer(random){
-// 	console.log(random);
-// 	choices = document.getElementsByName("choices");
-// 	for(var i=0; i<choices.length; i++){
-// 		if(choices[i].checked){
-// 			choice = choices[i].value;
-// 		}
-// 	}
-// 	if(choice == questions[pos][1][5]){
-// 		correct++;
-// 		_("showRight").innerHTML = "right";
-// 	}else {
-		// _("showRight").innerHTML = "wrong";
-// 		pos = 0;
-// 		correct = 0;
-// 		renderQuestion();
-// 		_("showRight").innerHTML = "";
-// 		return false;
-// 	}
-// 	pos++;
-// 	renderQuestion();
-// }
-
-
-// window.addEventListener("load", renderQuestion, false);
-// renderQuestion();
 
 var buttonblack1 = new five.Button({
 	pin:2,
@@ -677,16 +557,12 @@ var stepper2 = new five.Stepper({
 //   });
 // }
 
-// button.on("press", function() {
-//  info.innerHTML += "button pushed. ";
 
-
-
-  buttonblack1.on("hold", function() {
+  buttonblack1.on("down", function() {
   	functions[arr[pageNumber++]]();
   });
 
-  buttonblack2.on("hold", function() {
+  buttonblack2.on("down", function() {
   	console.log("black2");
   });
 
