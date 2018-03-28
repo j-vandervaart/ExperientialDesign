@@ -80,13 +80,16 @@ body p {
 /*OPENING*/
 
 img.proximaLogoLarge {
-    max-height: 50%;
-    max-width: 50%;
+    max-height: 75%;
+    max-width: 75%;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 40px;
-    width: 50%;
+    position: absolute;
+    top: 11.5%;
+    left: 25%;
+    right: 25%;
+    bottom: 25%;
         -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
        -moz-animation: fadein 2s; /* Firefox < 16 */
         -ms-animation: fadein 2s; /* Internet Explorer */
@@ -464,3 +467,21 @@ img.questionsField {
 } 
 */
 /*# sourceMappingURL=main.css.map */
+
+/*TIMER*/
+
+#countDown {
+  color: #FFA500;
+  padding-left: 100px;
+  margin-bottom: 0px;
+}
+
+.timerText {
+  font-size: 50px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#barcode {
+  opacity: 0;
+}

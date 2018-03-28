@@ -1,6 +1,8 @@
 var Readable = require('stream').Readable  
 var util = require('util')  
 var five = require('johnny-five')
+var mysql = require('mysql');
+var mysql = require('mysql-wrapper');
 
 util.inherits(MyStream, Readable)  
 function MyStream(opt) {  
@@ -13,6 +15,17 @@ process.__defineGetter__('stdin', function() {
   process.__stdin = new MyStream()
   return process.__stdin
 })
+
+var conn = mysql({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+  port: '8889',
+  database: 'proxima'
+});
+
+var barcode = document.getElementById('barcode');
 
 var pageNumber = 0;
 
@@ -28,7 +41,8 @@ var page2 = `<div id="p2">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
 	<img class="barCode" src="images/barcode.png">
-</div>`;
+</div>
+<input type="text" id="barcode" name="barcode" autofocus>`;
 
 /*Instructional Pages*/
 
@@ -95,6 +109,8 @@ Your browser does not support the video tag.
 var page8 = `<div id="p8">
 
 	<div id="content">
+
+		<p class="timerText"><span id="countDown">10</span></p>
 
 	<!--ASK AUDIENCE-->
 	<img class="audience" src="images/audience.svg">
@@ -214,14 +230,20 @@ var page8 = `<div id="p8">
 <text id="text1" width="200" transform="matrix(1 0 0 1 391.0004 66.4105)"><tspan x="0" y="0" class="st0 st7 st8 cats">This is question 1</tspan><tspan x="0" y="61.2" class="st0 st7 st8">This is question 1 field 2</tspan></text>
 <rect x="398" y="226" class="st6" width="792" height="200"/>
 			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="46" y="22" width="400">    
-                    <div id="text2" style="font-size: 25px; color: white">I'm a div inside a SVG.</div>                
+                    <div id="text2" style="font-size: 25px; color: white">I'm answer one</div>                
             </foreignobject>
 <rect x="398" y="337" class="st6" width="792" height="200"/>
-<text id="text3" transform="matrix(1 0 0 1 398 361.0117)" class="st0 st7 st9">Answer C</text>
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="56" y="130" width="400">    
+                    <div id="text3" style="font-size: 25px; color: white">I'm answer two</div>                
+            </foreignobject>
 <rect x="1043.8" y="226" class="st6" width="792" height="200"/>
-<text id="text4" transform="matrix(1 0 0 1 1043.7507 250.0117)" class="st0 st7 st9">Answer B</text>
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="706" y="22" width="400">    
+                    <div id="text4" style="font-size: 25px; color: white">I'm answer three</div>                
+            </foreignobject>
 <rect x="1043.8" y="339" class="st6" width="792" height="200"/>
-<text id="text5" transform="matrix(1 0 0 1 1043.7507 363.0117)" class="st0 st7 st9">Answer D</text>
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="706" y="130" width="400">    
+                    <div id="text5" style="font-size: 25px; color: white">I'm answer four</div>                
+            </foreignobject>
 </svg>
 
 </div>
@@ -263,7 +285,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	var b1 = this[0];
 	var b2 = this[1];
 
-var arr = ['loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpage8'];
+var arr = ['loadpage2', 'loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpage8'];
 
 var functions = {
 
@@ -318,11 +340,7 @@ loadpage8: function() {
 	var cat3 = document.querySelector('.st2');
 	var cat4 = document.querySelector('.st4');
 	winner.push(cat1, cat2, cat3, cat4);
-	// function dog() {
-	// 	console.log(winner);
-	// }
 
-	// dog();
 	var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
 	var floatingBox = 9;
 	var cats = document.querySelectorAll(".cats");
@@ -336,6 +354,16 @@ loadpage8: function() {
 	}
 
 	function renderQuestion(){
+
+			var timeLeft = 11;
+		    var gameTimer = setInterval(function(){
+		    timeLeft--;
+		    document.querySelector("#countDown").textContent = timeLeft;
+		    if(timeLeft <= 0)
+		        clearInterval(gameTimer);
+		    },1000);
+
+		
 		for(var i = 0; i < cats.length; i++) {
 			cats[i].style.backgroundColor = "transparent";
 		}
@@ -413,12 +441,16 @@ loadpage8: function() {
 				var dog = dog4.id.charAt(3);
 			}else{
 				pos = 0;
+				pageNumber = 0;
 				correct = 0;
 				choice = null;
+
 				_("showRight").innerHTML = "no answer";
-				setTimeout(renderQuestion, 5000);
+				game.innerHTML = page11;
+				setTimeout(functions[arr[0]], 10000);
 				return;
 			}
+
 			// 	}else{
 			// 		_("showRight").innerHTML = "no answer";
 			// 		pos = 0;
@@ -427,6 +459,7 @@ loadpage8: function() {
 			// 		return;
 			// 	}
 			// }
+
 			if(choice == questions[pos][cat][5]){
 				servo[servoSwitch].cw().step(5000, function() {
     				console.log("done");
@@ -444,6 +477,10 @@ loadpage8: function() {
 				servoSwitch++;
 				SpeedWin();
 				pos++;
+
+				/*IF STATEMENT FOR ALL 10 RIGHT*/
+				// game.innerHTML = page9;
+
 			}else if(choice != questions[pos][cat][5]){
 				console.log("ugh!");
 				// _("showRight").innerHTML = "wrong";
@@ -458,14 +495,17 @@ loadpage8: function() {
 				correct = 0;
 				pageNumber = 0;
 				floatingBox = 0;
-				setTimeout(functions[arr[0]], 4000);
+				game.innerHTML = page11;
+				setTimeout(functions[arr[0]], 10000);
 				_("showRight").innerHTML = "";
 				SpeedLose();
 
 				return false;
 			}
-			setTimeout(renderQuestion, 4000);
-		}, 8000);
+
+			setTimeout(renderQuestion, 5000);
+		}, 11000);
+
 	}
 	renderQuestion();
 
@@ -570,6 +610,7 @@ var stepper2 = new five.Stepper({
 
 
   buttonblack1.on("up", function() {
+  	if(pageNumber <= 5)
   	functions[arr[pageNumber++]]();
   });
 
