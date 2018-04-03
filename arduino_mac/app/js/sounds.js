@@ -68,10 +68,10 @@
 // fiftyfifty.addEventListener("click", FiftyFiftyLifeline, false);
 
 
-//EVERYTHING DOWN FROM HERE IS REQUIRED
-////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//SOUND FUNCTIONS
-//SPEED ROUND
+// EVERYTHING DOWN FROM HERE IS REQUIRED
+// //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// SOUND FUNCTIONS
+// SPEED ROUND
 
 var primary = document.getElementById("primary");
 var secondary = document.getElementById("secondary");
