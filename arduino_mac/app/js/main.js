@@ -29,7 +29,8 @@ var conn = mysql({
 
 // Array Vars for Page Changing
 var pageNumber = 0;
-var arr = ['loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8'];
+var arr = ['loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
+var dog;
 
 // Load in page One
 game.innerHTML = page1;
@@ -71,6 +72,10 @@ new five.Boards(["A", "B"]).on("ready", function(){
   		game.innerHTML = page12;
 	},
 
+	loadpage11: function() {
+  		game.innerHTML = page11;
+	},
+
 	loadpageIntroVideo: function() {
   		game.innerHTML = pageIntroVideo;
   		setTimeout(function() {
@@ -84,7 +89,8 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		
 
 		var lifeLine = true;
-		var lifeLine2 = false;
+		var lifeLine2 = true;
+		var dog3 = 11;
 
 		// Answer Vars
   		var winner = [];
@@ -95,8 +101,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		winner.push(choice1, choice2, choice3, choice4);
 
 		// Orange Box vars 
-		var orange = document.querySelectorAll(".orange");
-		var floatingBox = 9;
+		
 
 		// Switching Motors vars
 		var servoSwitch = 0;
@@ -111,28 +116,22 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			return document.getElementById(x);
 		}
 
-		function renderQuestion(){
+		var floatingBox = 9;
 
-			// Timer
-			var cat1 = document.querySelector('#countDown');
-			if(cat1) {
-				var timeLeft = 11;
-				var gameTimer = setInterval(function(){
-			    timeLeft--;
-			    cat1.textContent = timeLeft;
-				if(timeLeft <= 0)
-				clearInterval(gameTimer);
-				},1000);
+		function renderQuestion(dog3, test4){
+			var orange = document.querySelectorAll(".orange");
+
+			if(test4) {
+				floatingBox = test4;
+				// turtle[3].style.backgroundColor = "red";
 			}
-
-
-
 			// Setting Color of Orange Box 
 			for(var i = 0; i < orange.length; i++) {
 				orange[i].style.backgroundColor = "transparent";
 				orange[i].style.borderRadius = "20px";
 				orange[i].style.borderRadius = "150px";
 			}
+			console.log(floatingBox);
 			orange[floatingBox].style.backgroundColor = "orange";
 			orange[floatingBox].style.color = "white";
 
@@ -152,7 +151,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			if(pos >= questions.length){
 				pos = 0;
 				correct = 0;
-				floatingBox = 0;
+				floatingBox = 9;
 				servo[servoSwitch].cw().step(5000, function() {
 	   			});
 	   			servoSwitch++;
@@ -185,10 +184,9 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			//50/50
 
   			if(lifeLine == true) {
-  				buttonblack1.on("up", testFun);
+  				buttonblack1.on("hold", testFun);
 
   				function testFun() {
-  					console.log("sdfsdf");
   					
   					var rand1 = Math.floor(Math.random()*3);
   					var rand2 = Math.floor(Math.random()*3);
@@ -202,104 +200,118 @@ new five.Boards(["A", "B"]).on("ready", function(){
   					}
 
   					lifeLine = false;
-  					buttonblack1.removeListener("up", testFun);
+  					buttonblack1.removeListener("hold", testFun);
   				}
   			}
 
   			//Ask Audience!
-  			buttonblack2.on("up", function() {
-  					lifeLine2 = true;
+  			buttonblack2.on("hold", cats2);
+  			function cats2() {
+  				var test4 = floatingBox;
+  				var turtle = orange;
+  				console.log(test4);
+  				buttonblack2.removeListener("hold", cats2);
+  			// 		lifeLine2 = true;
 
-  					if(lifeLine2 == true) {
+  			// 		if(lifeLine2 == true) {
+  					lifeLine2 = false;
   					game.innerHTML = page12;
+  					var horse = document.querySelector("#countDownAudience");
+  					if(horse) {
 					var audienceTimeLeft = 20;
 					var audienceGameTimer = setInterval(function(){
 						audienceTimeLeft--;
-						document.querySelector("#countDownAudience").innerHTML = audienceTimeLeft;
-						if(audienceTimeLeft <= 0)
+						horse.innerHTML = audienceTimeLeft;
+						if(audienceTimeLeft == 1) {
 							clearInterval(audienceGameTimer);
+						}
 						},1000);
-  					}
 
-  					setTimeout(function() {
-  						game.innerHTML = page8;
-  						renderQuestion();
-  					}, 22000);
-  					lifeLine2 == false;
-  					return;
-  			});
+					setTimeout(function(){
+						game.innerHTML = page8;
+						lifeLine2 = true;
+						renderQuestion(dog3, test4);
+					}, 20000);
+				}
+  			}
   					
 
+  			var cat1 = document.querySelector('#countDown');
+				dog3=11;
+				var timeLeft = dog3;
+				var gameTimer = setInterval(function(){
+			    	timeLeft--;
+			    	cat1.textContent = timeLeft;
+			    	if(lifeLine2 == false) {
+			    		return;
+			    	}else if(timeLeft == 0) {
+						clearInterval(gameTimer);
+						console.log('ghsdgfhsd');
+						var answer1 = document.querySelector("#one0");
+						var answer2 = document.querySelector("#one1");
+						var answer3 = document.querySelector("#one2");
+						var answer4 = document.querySelector("#one3");
 
-			// Check Answers
-			setTimeout(function() {
-				var answer1 = document.querySelector("#one0");
-				var answer2 = document.querySelector("#one1");
-				var answer3 = document.querySelector("#one2");
-				var answer4 = document.querySelector("#one3");
+						// Checks in radio input is checked
+						if(answer1.checked){
+							choice = answer1.value;
+							var selected = answer1.id.charAt(3);
+						}else if (answer2.checked) {
+							choice = answer2.value;
+							var selected = answer2.id.charAt(3);
+						}else if (answer3.checked) {
+							choice = answer3.value;
+							var selected = answer3.id.charAt(3);
+						}else if (answer4.checked) {
+							choice = answer4.value;
+							var selected = answer4.id.charAt(3);
+						}else{
+							pos = 0;
+							pageNumber = 0;
+							correct = 0;
+							choice = null;
+							game.innerHTML = page11;
+							setTimeout(functions[arr[0]], 10000);
+							return;
+						}
 
-				// Checks in radio input is checked
-				if(answer1.checked){
-					choice = answer1.value;
-					var selected = answer1.id.charAt(3);
-				}else if (answer2.checked) {
-					choice = answer2.value;
-					var selected = answer2.id.charAt(3);
-				}else if (answer3.checked) {
-					choice = answer3.value;
-					var selected = answer3.id.charAt(3);
-				}else if (answer4.checked) {
-					choice = answer4.value;
-					var selected = answer4.id.charAt(3);
-				}else{
-					pos = 0;
-					pageNumber = 0;
-					correct = 0;
-					choice = null;
-					game.innerHTML = page11;
-					setTimeout(functions[arr[0]], 10000);
-					return;
-				}
+						// If the answer is RIGHT
+						if(choice == questions[pos][randNum][5]){
+							correct++;
+							for(var i = 0; i < winner.length; i++) {
+			    			winner[i].style.fill = "url(#Path_8_1_)";
+			    			}	
+			    			if(selected) {	
+								winner[selected].style.fill = "green";
+								// _("showRight").innerHTML = "right";
+							}
+							floatingBox--;
+							SpeedWin();
+							pos++;
 
-				// If the answer is RIGHT
-				if(choice == questions[pos][randNum][5]){
-					correct++;
-					for(var i = 0; i < winner.length; i++) {
-	    			winner[i].style.fill = "url(#Path_8_1_)";
-	    			}	
-	    			if(selected) {	
-						winner[selected].style.fill = "green";
-						_("showRight").innerHTML = "right";
+						// If the answer is WRONG
+						}else if(choice != questions[pos][randNum][5]){
+							
+							for(var i = 0; i < winner.length; i++) {
+								winner[i].style.fill = "url(#Path_8_1_)";
+			    			}	
+							winner[selected].style.fill = "red";
+							pos = 0;
+							correct = 0;
+							pageNumber = 0;
+							floatingBox = 9;
+							setTimeout(functions[arr[7]], 5000);
+							setTimeout(functions[arr[0]], 10000);
+							// _("showRight").innerHTML = "";
+							SpeedLose();
+							return false;
+						}
+						setTimeout(renderQuestion, 5000);
 					}
-					floatingBox--;
-					SpeedWin();
-					pos++;
-
-				// If the answer is WRONG
-				}else if(choice != questions[pos][randNum][5]){
-					
-					for(var i = 0; i < winner.length; i++) {
-						winner[i].style.fill = "url(#Path_8_1_)";
-	    			}	
-					winner[selected].style.fill = "red";
-					pos = 0;
-					correct = 0;
-					pageNumber = 0;
-					floatingBox = 0;
-					game.innerHTML = page11;
-					setTimeout(functions[arr[0]], 10000);
-					// _("showRight").innerHTML = "";
-					SpeedLose();
-					return false;
-				}
-
-				setTimeout(renderQuestion, 5000);
-			}, 11000);
-		}
-
-		// audienceTimer();
-
-		renderQuestion();
+				},1000);
+			}
+			
+		renderQuestion(dog3);
 
 		var buttonred = new five.Button({
 			pin:2,
@@ -321,7 +333,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			board: b1
 		});
 
-	  	buttonred.on("up", function() {
+	  	buttonred.on("hold", function() {
 
 	    	for(var i = 0; i < winner.length; i++) {
 	    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -331,7 +343,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	    	one.checked = true;
 	  	});
 
-	  	buttonblue.on("up", function() {
+	  	buttonblue.on("hold", function() {
 
 	    	for(var i = 0; i < winner.length; i++) {
 	    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -341,7 +353,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	    	two.checked = true;
 	  	});
 
-	  	buttonyellow.on("up", function() {
+	  	buttonyellow.on("hold", function() {
 
 	    	for(var i = 0; i < winner.length; i++) {
 	    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -351,7 +363,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	    	three.checked = true;
 	  	});
 
-	  	buttongreen.on("up", function() {
+	  	buttongreen.on("hold", function() {
 
 	    	for(var i = 0; i < winner.length; i++) {
 	    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -393,7 +405,7 @@ var stepper2 = new five.Stepper({
 //   });
 // }
 
-buttonblack1.on("up", function() {
+buttonblack1.on("hold", function() {
   	if(pageNumber <= 5)
   	functions[arr[pageNumber++]]();
   });
