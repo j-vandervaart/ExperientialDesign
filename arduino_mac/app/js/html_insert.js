@@ -216,6 +216,16 @@ var page8 = `<div id="p8">
 </svg>
 
 </div>
+</div>
+
+
+<div id="p12">
+	<img class="audienceOrangeSelection" src="images/audienceorangepage.png">
+	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
+	<p>You have 1 minute to ask your peers</p>
+
+	<p class="timerText"><span id="countDownAudience">60</span></p>
+
 </div>`;
 
 /*Winner*/
@@ -243,16 +253,4 @@ var page11 = `<div id="p11">
 	<p class="congratulations">Unfortunately you cannot call 
 <br>yourself a developer today.
 <br>But better luck next time!</p>
-</div>`;
-
-
-/*Ask the audience*/
-
-var page12 = `<div id="p12">
-	<img class="audienceOrangeSelection" src="images/audienceorangepage.png">
-	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
-	<p>You have 1 minute to ask your peers</p>
-
-	<p class="timerText"><span id="countDownAudience">60</span></p>
-
 </div>`;

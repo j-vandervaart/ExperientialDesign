@@ -84,7 +84,6 @@ new five.Boards(["A", "B"]).on("ready", function(){
   		}, 1000);
 	},
 
-
 	loadpage8: function() {
 		game.innerHTML = page8;
 		
@@ -279,12 +278,14 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		  				var test4 = floatingBox;
 		  				var posCat = pos;
 		  				var randNumCat = randNum;
+						lifeLine3 = false;
+		  				document.querySelector('#p12').style.display = "block";
 		  				
-		  					lifeLine3 = false;
-		  					game.innerHTML = page12;
+		  					
+		  					// game.innerHTML = page12;
 		  					var horse = document.querySelector("#countDownAudience");
 		  					if(horse) {
-							var audienceTimeLeft = 20;
+							var audienceTimeLeft = 12;
 							var audienceGameTimer = setInterval(function(){
 								audienceTimeLeft--;
 								horse.innerHTML = audienceTimeLeft;
@@ -294,29 +295,45 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								},1000);
 
 							setTimeout(function(){
-								game.innerHTML = page8;
 								lifeLine3 = true;
-								renderQuestion(test4, posCat, randNumCat);
-								return;
-							}, 20000);
+								// renderQuestion(test4, posCat, randNumCat);
+								// return;
+							}, 12000);
 						}
 						lifeLine2 = false;
 						buttonblack2.removeListener("hold", cats2);
 		  			}
-	  			}
-	  					
+		  		}
 
-	  			var cat1 = document.querySelector('#countDown');
-					var timeLeft = 11;
+
+	  				var cat1 = document.querySelector('#countDown');
+					var timeLeft;
+					timeLeft = 11;
+
 					var gameTimer = setInterval(function(){
 				    	timeLeft--;
 				    	cat1.textContent = timeLeft;
 				    	if(lifeLine3 == false) {
 				    		clearInterval(gameTimer);
-				    		timeLeft = null;
-				    		return;
-				    	}else if(timeLeft == 0) {
-							clearInterval(gameTimer);
+				    		setTimeout(function() {
+				    			gameTimer = setInterval(function() {
+				    				timeLeft--;
+				    				cat1.textContent = timeLeft;
+				    				if(timeLeft == 0) {
+				    					console.log(timeLeft);
+				    					clearInterval(gameTimer);
+				    					lucasSucks();
+				    				}
+				    			}, 1000);
+				    			
+				    		}, 12000);
+				    	}
+
+				    	if(timeLeft == 0) {
+				    		lucasSucks();
+				    	}
+				    	function lucasSucks() {
+				    		clearInterval(gameTimer);
 							console.log(questions[pos][randNum][5]);
 							var answer1 = document.querySelector("#one0");
 							var answer2 = document.querySelector("#one1");
@@ -378,7 +395,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								return false;
 							}
 							setTimeout(renderQuestion, 5000);
-						}
+					}
 					},1000);
 				}
 				
