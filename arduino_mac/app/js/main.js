@@ -3,6 +3,7 @@ var util = require('util')
 var five = require('johnny-five')
 var mysql = require('mysql');
 var mysql = require('mysql-wrapper');
+// require('events').EventEmitter.prototype._maxListeners = 1;
 
 util.inherits(MyStream, Readable)  
 function MyStream(opt) {  
@@ -90,15 +91,10 @@ new five.Boards(["A", "B"]).on("ready", function(){
 
 		var lifeLine = true;
 		var lifeLine2 = true;
-		var dog3 = 11;
+		var lifeLine3 = true;
 
 		// Answer Vars
-  		var winner = [];
-		var choice1 = document.querySelector('.st5');
-		var choice2 = document.querySelector('.st3');
-		var choice3 = document.querySelector('.st2');
-		var choice4 = document.querySelector('.st4');
-		winner.push(choice1, choice2, choice3, choice4);
+  		
 
 		// Orange Box vars 
 		
@@ -110,6 +106,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		
 		// Quiz vars
 		var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
+		var randNum;
 
 		// Grab Element
 		function _(x){
@@ -117,261 +114,275 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		}
 
 		var floatingBox = 9;
+		// var currentPos = pos; 
 
-		function renderQuestion(dog3, test4){
+		function renderQuestion(test4, posCat, randNumCat){
+			var winner = [];
+			var choice1 = document.querySelector('.st5');
+			var choice2 = document.querySelector('.st3');
+			var choice3 = document.querySelector('.st2');
+			var choice4 = document.querySelector('.st4');
+			winner.push(choice1, choice2, choice3, choice4);
+
+			var buttonred = new five.Button({
+				pin:2,
+				board: b1
+			});
+
+			var buttonblue = new five.Button({
+				pin:3,
+				board: b1
+			});
+
+			var buttonyellow = new five.Button({
+				pin:4,
+				board: b1
+			});
+
+			var buttongreen = new five.Button({
+				pin:5,
+				board: b1
+			});
+
+			buttonred.on("hold", function() {
+		  		console.log('sdfsdf');
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[0].style.fill = "yellow";
+		    	var one = document.querySelector("#one0");
+		    	one.checked = true;
+		  	});
+
+		  	buttonblue.on("hold", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[1].style.fill = "yellow";
+		    	var two = document.querySelector("#one1");
+		    	two.checked = true;
+		  	});
+
+		  	buttonyellow.on("hold", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[2].style.fill = "yellow";
+		    	var three = document.querySelector("#one2");
+		    	three.checked = true;
+		  	});
+
+		  	buttongreen.on("hold", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[3].style.fill = "yellow";
+		    	var four = document.querySelector("#one3");
+		    	four.checked = true;
+		  	});
+
 			var orange = document.querySelectorAll(".orange");
+			randNum = Math.floor(Math.random()*3);
 
-			if(test4) {
-				floatingBox = test4;
-				// turtle[3].style.backgroundColor = "red";
-			}
-			// Setting Color of Orange Box 
-			for(var i = 0; i < orange.length; i++) {
-				orange[i].style.backgroundColor = "transparent";
-				orange[i].style.borderRadius = "20px";
-				orange[i].style.borderRadius = "150px";
-			}
-			console.log(floatingBox);
-			orange[floatingBox].style.backgroundColor = "orange";
-			orange[floatingBox].style.color = "white";
-
-			// test = _("test");
-			var text1 = document.querySelector("#text1");
-			var text2 = document.querySelector("#text2");
-			var text3 = document.querySelector("#text3");
-			var text4 = document.querySelector("#text4");
-			var text5 = document.querySelector("#text5");
-
-			// Reset all Answers to Gradient
-			for(var i = 0; i < winner.length; i++) {
-				winner[i].style.fill = "url(#Path_8_1_)";
-	    	}
-
-	    	// If there's a Winner
-			if(pos >= questions.length){
-				pos = 0;
-				correct = 0;
-				floatingBox = 9;
-				servo[servoSwitch].cw().step(5000, function() {
-	   			});
-	   			servoSwitch++;
-				return false;
-			}
-		
-			// Setting Questions and Answers
-			test = _('test');
-			var randNum = Math.floor(Math.random()*3);
-			var textArr = [];
-			question = questions[pos][randNum][0];
-			chA = questions[pos][randNum][1];
-			chB = questions[pos][randNum][2];
-			chC = questions[pos][randNum][3];
-			chD = questions[pos][randNum][4];
-			text1.innerHTML = question;
-			text2.innerHTML = chA;
-			text4.innerHTML = chB;
-			text3.innerHTML = chC;
-			text5.innerHTML = chD;
-			textArr.push(text2, text4, text3, text5);
-			test.innerHTML = "<h3>"+question+"</h3>";
-			test.innerHTML += "<input id='one0' type='radio' name='choices' value='A'>"+chA+"<br>";
-			test.innerHTML += "<input id='one1' type='radio' name='choices' value='B'>"+chB+"<br>";
-			test.innerHTML += "<input id='one2' type='radio' name='choices' value='C'>"+chC+"<br>";
-			test.innerHTML += "<input id='one3' type='radio' name='choices' value='D'>"+chD+"<br><br>";
-			var valueArr = ['A', 'B', 'C', 'D'];
-
-
-			//50/50
-
-  			if(lifeLine == true) {
-  				buttonblack1.on("hold", testFun);
-
-  				function testFun() {
-  					
-  					var rand1 = Math.floor(Math.random()*3);
-  					var rand2 = Math.floor(Math.random()*3);
-
-  					if(rand1 != rand2 && valueArr[rand1] != questions[pos][randNum][5] && valueArr[rand2] != questions[pos][randNum][5]) {
-  						textArr[rand1].innerHTML = "";
-  						textArr[rand2].innerHTML = "";
-  						return;
-  					} else {
-  						testFun();
-  					}
-
-  					lifeLine = false;
-  					buttonblack1.removeListener("hold", testFun);
-  				}
-  			}
-
-  			//Ask Audience!
-  			buttonblack2.on("hold", cats2);
-  			function cats2() {
-  				var test4 = floatingBox;
-  				var turtle = orange;
-  				console.log(test4);
-  				buttonblack2.removeListener("hold", cats2);
-  			// 		lifeLine2 = true;
-
-  			// 		if(lifeLine2 == true) {
-  					lifeLine2 = false;
-  					game.innerHTML = page12;
-  					var horse = document.querySelector("#countDownAudience");
-  					if(horse) {
-					var audienceTimeLeft = 20;
-					var audienceGameTimer = setInterval(function(){
-						audienceTimeLeft--;
-						horse.innerHTML = audienceTimeLeft;
-						if(audienceTimeLeft == 1) {
-							clearInterval(audienceGameTimer);
-						}
-						},1000);
-
-					setTimeout(function(){
-						game.innerHTML = page8;
-						lifeLine2 = true;
-						renderQuestion(dog3, test4);
-					}, 20000);
+				if(test4) {
+					pos = posCat;
+					randNum = randNumCat;
 				}
-  			}
-  					
+				if(test4) {
+					floatingBox = test4;
+					// turtle[3].style.backgroundColor = "red";
+				}
 
-  			var cat1 = document.querySelector('#countDown');
-				dog3=11;
-				var timeLeft = dog3;
-				var gameTimer = setInterval(function(){
-			    	timeLeft--;
-			    	cat1.textContent = timeLeft;
-			    	if(lifeLine2 == false) {
-			    		return;
-			    	}else if(timeLeft == 0) {
-						clearInterval(gameTimer);
-						console.log('ghsdgfhsd');
-						var answer1 = document.querySelector("#one0");
-						var answer2 = document.querySelector("#one1");
-						var answer3 = document.querySelector("#one2");
-						var answer4 = document.querySelector("#one3");
+				// Setting Color of Orange Box 
+				for(var i = 0; i < orange.length; i++) {
+					orange[i].style.backgroundColor = "transparent";
+					orange[i].style.borderRadius = "20px";
+					orange[i].style.borderRadius = "150px";
+				}
+				orange[floatingBox].style.backgroundColor = "orange";
+				orange[floatingBox].style.color = "white";
 
-						// Checks in radio input is checked
-						if(answer1.checked){
-							choice = answer1.value;
-							var selected = answer1.id.charAt(3);
-						}else if (answer2.checked) {
-							choice = answer2.value;
-							var selected = answer2.id.charAt(3);
-						}else if (answer3.checked) {
-							choice = answer3.value;
-							var selected = answer3.id.charAt(3);
-						}else if (answer4.checked) {
-							choice = answer4.value;
-							var selected = answer4.id.charAt(3);
-						}else{
-							pos = 0;
-							pageNumber = 0;
-							correct = 0;
-							choice = null;
-							game.innerHTML = page11;
-							setTimeout(functions[arr[0]], 10000);
-							return;
-						}
+				// test = _("test");
+				var text1 = document.querySelector("#text1");
+				var text2 = document.querySelector("#text2");
+				var text3 = document.querySelector("#text3");
+				var text4 = document.querySelector("#text4");
+				var text5 = document.querySelector("#text5");
 
-						// If the answer is RIGHT
-						if(choice == questions[pos][randNum][5]){
-							correct++;
-							for(var i = 0; i < winner.length; i++) {
-			    			winner[i].style.fill = "url(#Path_8_1_)";
-			    			}	
-			    			if(selected) {	
-								winner[selected].style.fill = "green";
-								// _("showRight").innerHTML = "right";
-							}
-							floatingBox--;
-							SpeedWin();
-							pos++;
+				// Reset all Answers to Gradient
+				for(var i = 0; i < winner.length; i++) {
+					winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
 
-						// If the answer is WRONG
-						}else if(choice != questions[pos][randNum][5]){
-							
-							for(var i = 0; i < winner.length; i++) {
-								winner[i].style.fill = "url(#Path_8_1_)";
-			    			}	
-							winner[selected].style.fill = "red";
-							pos = 0;
-							correct = 0;
-							pageNumber = 0;
-							floatingBox = 9;
-							setTimeout(functions[arr[7]], 5000);
-							setTimeout(functions[arr[0]], 10000);
-							// _("showRight").innerHTML = "";
-							SpeedLose();
-							return false;
-						}
-						setTimeout(renderQuestion, 5000);
-					}
-				},1000);
-			}
+		    	// If there's a Winner
+				if(pos >= questions.length){
+					pos = 0;
+					correct = 0;
+					floatingBox = 9;
+					servo[servoSwitch].cw().step(5000, function() {
+		   			});
+		   			servoSwitch++;
+					return false;
+				}
 			
-		renderQuestion(dog3);
+				// Setting Questions and Answers
+				test = _('test');
+				var textArr = [];
+				question = questions[pos][randNum][0];
+				chA = questions[pos][randNum][1];
+				chB = questions[pos][randNum][2];
+				chC = questions[pos][randNum][3];
+				chD = questions[pos][randNum][4];
+				text1.innerHTML = question;
+				text2.innerHTML = chA;
+				text4.innerHTML = chB;
+				text3.innerHTML = chC;
+				text5.innerHTML = chD;
+				textArr.push(text2, text4, text3, text5);
+				test.innerHTML = "<h3>"+question+"</h3>";
+				test.innerHTML += "<input id='one0' type='radio' name='choices' value='A'>"+chA+"<br>";
+				test.innerHTML += "<input id='one1' type='radio' name='choices' value='B'>"+chB+"<br>";
+				test.innerHTML += "<input id='one2' type='radio' name='choices' value='C'>"+chC+"<br>";
+				test.innerHTML += "<input id='one3' type='radio' name='choices' value='D'>"+chD+"<br><br>";
+				var valueArr = ['A', 'B', 'C', 'D'];
 
-		var buttonred = new five.Button({
-			pin:2,
-			board: b1
-		});
 
-		var buttonblue = new five.Button({
-			pin:3,
-			board: b1
-		});
+				//50/50
 
-		var buttonyellow = new five.Button({
-			pin:4,
-			board: b1
-		});
+	  			if(lifeLine == true) {
+	  				buttonblack1.on("hold", testFun);
 
-		var buttongreen = new five.Button({
-			pin:5,
-			board: b1
-		});
+	  				function testFun() {
+	  					
+	  					var rand1 = Math.floor(Math.random()*3);
+	  					var rand2 = Math.floor(Math.random()*3);
 
-	  	buttonred.on("hold", function() {
+	  					if(rand1 != rand2 && valueArr[rand1] != questions[pos][randNum][5] && valueArr[rand2] != questions[pos][randNum][5]) {
+	  						textArr[rand1].innerHTML = "";
+	  						textArr[rand2].innerHTML = "";
+	  						return;
+	  					} else {
+	  						testFun();
+	  					}
 
-	    	for(var i = 0; i < winner.length; i++) {
-	    		winner[i].style.fill = "url(#Path_8_1_)";
-	    	}
-	    	winner[0].style.fill = "yellow";
-	    	var one = document.querySelector("#one0");
-	    	one.checked = true;
-	  	});
+	  					lifeLine = false;
+	  					buttonblack1.removeListener("hold", testFun);
+	  				}
+	  			}
 
-	  	buttonblue.on("hold", function() {
+	  			if(lifeLine2 == true) {
+		  			buttonblack2.on("hold", cats2);
+		  			function cats2() {
+		  				var test4 = floatingBox;
+		  				var posCat = pos;
+		  				var randNumCat = randNum;
+		  				
+		  					lifeLine3 = false;
+		  					game.innerHTML = page12;
+		  					var horse = document.querySelector("#countDownAudience");
+		  					if(horse) {
+							var audienceTimeLeft = 20;
+							var audienceGameTimer = setInterval(function(){
+								audienceTimeLeft--;
+								horse.innerHTML = audienceTimeLeft;
+								if(audienceTimeLeft == 1) {
+									clearInterval(audienceGameTimer);
+								}
+								},1000);
 
-	    	for(var i = 0; i < winner.length; i++) {
-	    		winner[i].style.fill = "url(#Path_8_1_)";
-	    	}
-	    	winner[1].style.fill = "yellow";
-	    	var two = document.querySelector("#one1");
-	    	two.checked = true;
-	  	});
+							setTimeout(function(){
+								game.innerHTML = page8;
+								lifeLine3 = true;
+								renderQuestion(test4, posCat, randNumCat);
+								return;
+							}, 20000);
+						}
+						lifeLine2 = false;
+						buttonblack2.removeListener("hold", cats2);
+		  			}
+	  			}
+	  					
 
-	  	buttonyellow.on("hold", function() {
+	  			var cat1 = document.querySelector('#countDown');
+					var timeLeft = 11;
+					var gameTimer = setInterval(function(){
+				    	timeLeft--;
+				    	cat1.textContent = timeLeft;
+				    	if(lifeLine3 == false) {
+				    		clearInterval(gameTimer);
+				    		timeLeft = null;
+				    		return;
+				    	}else if(timeLeft == 0) {
+							clearInterval(gameTimer);
+							console.log(questions[pos][randNum][5]);
+							var answer1 = document.querySelector("#one0");
+							var answer2 = document.querySelector("#one1");
+							var answer3 = document.querySelector("#one2");
+							var answer4 = document.querySelector("#one3");
 
-	    	for(var i = 0; i < winner.length; i++) {
-	    		winner[i].style.fill = "url(#Path_8_1_)";
-	    	}
-	    	winner[2].style.fill = "yellow";
-	    	var three = document.querySelector("#one2");
-	    	three.checked = true;
-	  	});
+							// Checks in radio input is checked
+							if(answer1.checked){
+								choice = answer1.value;
+								var selected = answer1.id.charAt(3);
+							}else if (answer2.checked) {
+								choice = answer2.value;
+								var selected = answer2.id.charAt(3);
+							}else if (answer3.checked) {
+								choice = answer3.value;
+								var selected = answer3.id.charAt(3);
+							}else if (answer4.checked) {
+								choice = answer4.value;
+								var selected = answer4.id.charAt(3);
+							}else{
+								pos = 0;
+								pageNumber = 0;
+								correct = 0;
+								choice = null;
+								game.innerHTML = page11;
+								setTimeout(functions[arr[0]], 10000);
+								return;
+							}
 
-	  	buttongreen.on("hold", function() {
+							// If the answer is RIGHT
+							if(choice == questions[pos][randNum][5]){
+								correct++;
+								for(var i = 0; i < winner.length; i++) {
+				    			winner[i].style.fill = "url(#Path_8_1_)";
+				    			}	
+				    			if(selected) {	
+									winner[selected].style.fill = "green";
+									// _("showRight").innerHTML = "right";
+								}
+								floatingBox--;
+								SpeedWin();
+								pos++;
 
-	    	for(var i = 0; i < winner.length; i++) {
-	    		winner[i].style.fill = "url(#Path_8_1_)";
-	    	}
-	    	winner[3].style.fill = "yellow";
-	    	var four = document.querySelector("#one3");
-	    	four.checked = true;
-	  	});
+							// If the answer is WRONG
+							}else if(choice != questions[pos][randNum][5]){
+								
+								for(var i = 0; i < winner.length; i++) {
+									winner[i].style.fill = "url(#Path_8_1_)";
+				    			}	
+								winner[selected].style.fill = "red";
+								pos = 0;
+								correct = 0;
+								pageNumber = 0;
+								floatingBox = 9;
+								setTimeout(functions[arr[7]], 5000);
+								setTimeout(functions[arr[0]], 10000);
+								// _("showRight").innerHTML = "";
+								SpeedLose();
+								return false;
+							}
+							setTimeout(renderQuestion, 5000);
+						}
+					},1000);
+				}
+				
+			renderQuestion();
 		}
 	}
 
