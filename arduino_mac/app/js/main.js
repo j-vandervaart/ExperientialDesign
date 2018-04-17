@@ -252,6 +252,8 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  				buttonblack1.on("hold", testFun);
 
 	  				function testFun() {
+						var fifty = document.querySelector('.fiftyfifty');
+						fifty.src = "images/5050used.png"; 
 						StopSound();
 						setTimeout(FiftyFiftyLifeline(), 1000);
 						setTimeout(SpeedRound(), 4000);
@@ -275,6 +277,8 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  			if(lifeLine2 == true) {
 		  			buttonblack2.on("hold", cats2);
 		  			function cats2() {
+						var audience = document.querySelector('.audience');
+						audience.src = "images/audienceused.png"; 
 						StopSound();
 						setTimeout(AudienceLifeline(), 1000);
 						setTimeout(SpeedRound(), 10000);  
