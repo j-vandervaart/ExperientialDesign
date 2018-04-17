@@ -34,21 +34,27 @@ var arr = ['loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loa
 var dog;
 
 // Load in page One
-game.innerHTML = page1;
 
 // Creating Board Instances
 new five.Boards(["A", "B"]).on("ready", function(){
 	var b1 = this[0];
 	var b2 = this[1];
 
+	game.innerHTML = page1;
 
 	var functions = {
+	// loadpage1: function() {
+	// 	game.innerHTML = page1;
+	// 	StopSound();
+	// },
+
 	loadpage2: function() {
 		game.innerHTML = page2;
 	},
 
 	loadpage3: function() {
   		game.innerHTML = page3;
+
   		SpeedStart();
 	},
 
@@ -66,7 +72,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 
 	loadpage7: function() {
   		game.innerHTML = page7;
-  		stopSound();
+  		StopSound();
 	},
 
 	loadpage12: function() {
@@ -87,7 +93,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	loadpage8: function() {
 		game.innerHTML = page8;
 		
-
+		SpeedRound();
 		var lifeLine = true;
 		var lifeLine2 = true;
 		var lifeLine3 = true;
@@ -116,32 +122,23 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		// var currentPos = pos; 
 
 		function renderQuestion(test4, posCat, randNumCat){
+			if(pos >= 0 && pos <= 2) {
+				console.log('1');
+  				SpeedRound();
+	  		}else if(pos >= 3 && pos <= 5) {
+	  			console.log('2');
+	  			MiddleRound();
+	  		}else if(pos >= 6 && pos <= 8) {
+	  			DeepRound();
+	  		}else if(pos = 9) {
+	  			MillionRound();
+	  		}
 			var winner = [];
 			var choice1 = document.querySelector('.st5');
 			var choice2 = document.querySelector('.st3');
 			var choice3 = document.querySelector('.st2');
 			var choice4 = document.querySelector('.st4');
 			winner.push(choice1, choice2, choice3, choice4);
-
-			var buttonred = new five.Button({
-				pin:2,
-				board: b1
-			});
-
-			var buttonblue = new five.Button({
-				pin:3,
-				board: b1
-			});
-
-			var buttonyellow = new five.Button({
-				pin:4,
-				board: b1
-			});
-
-			var buttongreen = new five.Button({
-				pin:5,
-				board: b1
-			});
 
 			buttonred.on("hold", function() {
 		  		console.log('sdfsdf');
@@ -255,7 +252,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  				buttonblack1.on("hold", testFun);
 
 	  				function testFun() {
-	  					
+	  					FiftyFiftyLifeline();
 	  					var rand1 = Math.floor(Math.random()*3);
 	  					var rand2 = Math.floor(Math.random()*3);
 
@@ -275,6 +272,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  			if(lifeLine2 == true) {
 		  			buttonblack2.on("hold", cats2);
 		  			function cats2() {
+		  				AudienceLifeline();
 		  				var test4 = floatingBox;
 		  				var posCat = pos;
 		  				var randNumCat = randNum;
@@ -298,6 +296,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								lifeLine3 = true;
 								// renderQuestion(test4, posCat, randNumCat);
 								// return;
+								StopSound();
 							}, 12000);
 						}
 						lifeLine2 = false;
@@ -374,12 +373,34 @@ new five.Boards(["A", "B"]).on("ready", function(){
 									// _("showRight").innerHTML = "right";
 								}
 								floatingBox--;
-								SpeedWin();
+								StopSound();
+								if(pos >= 0 && pos <= 2) {
+									console.log('1');
+					  				SpeedWin();
+						  		}else if(pos >= 3 && pos <= 5) {
+						  			console.log('2');
+						  			MiddleWin();
+						  		}else if(pos >= 6 && pos <= 8) {
+						  			DeepWin();
+						  		}else if(pos = 9) {
+						  			MillionWin();
+						  		}
 								pos++;
 
 							// If the answer is WRONG
 							}else if(choice != questions[pos][randNum][5]){
-								
+								// SpeedLose();
+								if(pos >= 0 && pos <= 2) {
+									console.log('1');
+					  				SpeedLose();
+						  		}else if(pos >= 3 && pos <= 5) {
+						  			console.log('2');
+						  			MiddleLose();
+						  		}else if(pos >= 6 && pos <= 8) {
+						  			DeepLose();
+						  		}else if(pos = 9) {
+						  			MillionLose();
+						  		}
 								for(var i = 0; i < winner.length; i++) {
 									winner[i].style.fill = "url(#Path_8_1_)";
 				    			}	
@@ -389,9 +410,13 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								pageNumber = 0;
 								floatingBox = 9;
 								setTimeout(functions[arr[7]], 5000);
-								setTimeout(functions[arr[0]], 10000);
+								setTimeout(function() {
+									StopSound();
+									game.innerHTML = page1;
+								}, 10000);
 								// _("showRight").innerHTML = "";
-								SpeedLose();
+								
+								
 								return false;
 							}
 							setTimeout(renderQuestion, 5000);
@@ -402,6 +427,26 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			renderQuestion();
 		}
 	}
+
+var buttonred = new five.Button({
+	pin:2,
+	board: b1
+});
+
+var buttonblue = new five.Button({
+	pin:3,
+	board: b1			
+});
+
+var buttonyellow = new five.Button({
+	pin:4,
+	board: b1
+});
+
+var buttongreen = new five.Button({
+	pin:5,
+	board: b1
+});	
 
 var buttonblack1 = new five.Button({
 	pin:2,

@@ -154,31 +154,31 @@ function MiddleFinalWin() {
 }
 
 //DEEP ROUND
-function deepStart() {
+function DeepStart() {
   secondary.src='sounds/deep/question/start.mp3';
   secondary.volume = 1;
   secondary.load(); 
   secondary.play();
   setTimeout(function(){deepRound(); }, 2000);
 }
-function deepRound() {
+function DeepRound() {
   primary.src='sounds/deep/question/main.mp3';
   primary.load(); 
   primary.play();
 }
-function deepQuery() {
+function DeepQuery() {
   secondary.src='sounds/deep/question/answer.mp3';
   secondary.load(); 
   secondary.play();
   setTimeout(function(){ primary.pause(); }, 300);
 }
-function deepWin() {
+function DeepWin() {
   primary.src='sounds/deep/win/main.mp3';
   primary.load(); 
   primary.play();
   setTimeout(function(){ secondary.volume = 0; }, 800);
 }
-function deepLose() {
+function DeepLose() {
   primary.src='sounds/deep/lose/main.mp3';
   primary.load(); 
   primary.play();
@@ -187,31 +187,31 @@ function deepLose() {
 }
 
 //Million ROUND
-function millionStart() {
+function MillionStart() {
   secondary.src='sounds/million/question/start.mp3';
   secondary.volume = 1;
   secondary.load(); 
   secondary.play();
   setTimeout(function(){millionRound(); }, 2000);
 }
-function millionRound() {
+function MillionRound() {
   primary.src='sounds/million/question/main.mp3';
   primary.load(); 
   primary.play();
 }
-function millionQuery() {
+function MillionQuery() {
   secondary.src='sounds/million/question/answer.mp3';
   secondary.load(); 
   secondary.play();
   setTimeout(function(){ primary.pause(); }, 300);
 }
-function millionWin() {
+function MillionWin() {
   primary.src='sounds/million/win/main.mp3';
   primary.load(); 
   primary.play();
   setTimeout(function(){ secondary.volume = 0; }, 800);
 }
-function millionLose() {
+function MillionLose() {
   primary.src='sounds/million/lose/main.mp3';
   primary.load(); 
   primary.play();
@@ -227,6 +227,7 @@ function EndingCredit() {
   primary.load(); 
   primary.play();
 }
+
 function AudienceLifeline() {
   secondary.src='sounds/other/audience-edit.mp3';
   secondary.load(); 
@@ -234,6 +235,7 @@ function AudienceLifeline() {
   primary.volume = 0.1;
   setTimeout(function(){ primary.volume = 1; }, 9000);
 }
+
 function FiftyFiftyLifeline() {
   secondary.src='sounds/other/fiftyfifty-edit.mp3';
   secondary.load(); 
@@ -242,8 +244,7 @@ function FiftyFiftyLifeline() {
   setTimeout(function(){ primary.volume = 1; }, 1000);
 }
 
-
-function stopSound() {
+function StopSound() {
   primary.pause();
   secondary.pause();
 }
