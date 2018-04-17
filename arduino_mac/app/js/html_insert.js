@@ -73,7 +73,22 @@ Your browser does not support the video tag.
 
 /*Main Game Play Page*/
 
-var page8 = `<div id="p8">
+var page8 = 
+	
+	`
+
+
+	<div id="p12">
+	<img class="audienceOrangeSelection" src="images/audienceorangepage.png">
+	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
+	<p>You have 1 minute to ask your peers</p>
+
+	<p class="timerText"><span id="countDownAudience">60</span></p>
+
+	</div>
+
+
+	<div id="p8">
 
 	<div id="content">
 
@@ -218,15 +233,7 @@ var page8 = `<div id="p8">
 </div>
 </div>
 
-
-<div id="p12">
-	<img class="audienceOrangeSelection" src="images/audienceorangepage.png">
-	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
-	<p>You have 1 minute to ask your peers</p>
-
-	<p class="timerText"><span id="countDownAudience">60</span></p>
-
-</div>`;
+`;
 
 /*Winner*/
 
