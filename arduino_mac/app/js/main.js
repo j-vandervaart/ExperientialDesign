@@ -252,7 +252,10 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  				buttonblack1.on("hold", testFun);
 
 	  				function testFun() {
-	  					FiftyFiftyLifeline();
+						StopSound();
+						setTimeout(FiftyFiftyLifeline(), 1000);
+						setTimeout(SpeedRound(), 4000);
+	  					
 	  					var rand1 = Math.floor(Math.random()*3);
 	  					var rand2 = Math.floor(Math.random()*3);
 
@@ -272,7 +275,9 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  			if(lifeLine2 == true) {
 		  			buttonblack2.on("hold", cats2);
 		  			function cats2() {
-		  				AudienceLifeline();
+						StopSound();
+						setTimeout(AudienceLifeline(), 1000);
+						setTimeout(SpeedRound(), 10000);  
 		  				var test4 = floatingBox;
 		  				var posCat = pos;
 		  				var randNumCat = randNum;
@@ -296,7 +301,6 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								lifeLine3 = true;
 								// renderQuestion(test4, posCat, randNumCat);
 								// return;
-								StopSound();
 							}, 12000);
 						}
 						lifeLine2 = false;
@@ -357,8 +361,22 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								pageNumber = 0;
 								correct = 0;
 								choice = null;
-								game.innerHTML = page11;
-								setTimeout(functions[arr[0]], 10000);
+								if(pos >= 0 && pos <= 2) {
+									console.log('1');
+					  				SpeedLose();
+						  		}else if(pos >= 3 && pos <= 5) {
+						  			console.log('2');
+						  			MiddleLose();
+						  		}else if(pos >= 6 && pos <= 8) {
+						  			DeepLose();
+						  		}else if(pos = 9) {
+						  			MillionLose();
+						  		}
+								setTimeout(functions[arr[7]], 5000);
+								setTimeout(function() {
+									StopSound();
+									game.innerHTML = page1;
+								}, 10000);
 								return;
 							}
 
