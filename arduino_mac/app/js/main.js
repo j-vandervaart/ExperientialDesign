@@ -1,8 +1,7 @@
 var Readable = require('stream').Readable  
 var util = require('util')  
 var five = require('johnny-five')
-var mysql = require('mysql');
-var mysql = require('mysql-wrapper');
+
 // require('events').EventEmitter.prototype._maxListeners = 1;
 
 util.inherits(MyStream, Readable)  
@@ -17,16 +16,8 @@ process.__defineGetter__('stdin', function() {
 })
 
 // Global Vars
-var barcode = document.getElementById('barcode');
+
 var game = document.querySelector("#mainGamePlay");
-var conn = mysql({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-  port: '8889',
-  database: 'proxima'
-});
 
 // Array Vars for Page Changing
 var pageNumber = 0;
@@ -37,6 +28,7 @@ var dog;
 
 // Creating Board Instances
 new five.Boards(["A", "B"]).on("ready", function(){
+
 	var b1 = this[0];
 	var b2 = this[1];
 
@@ -87,7 +79,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
   		game.innerHTML = pageIntroVideo;
   		setTimeout(function() {
   			functions[arr[6]]()
-  		}, 1000);
+  		}, 25000);
 	},
 
 	loadpage8: function() {
@@ -140,7 +132,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			var choice4 = document.querySelector('.st4');
 			winner.push(choice1, choice2, choice3, choice4);
 
-			buttonred.on("hold", function() {
+			buttonred.on("down", function() {
 		  		console.log('sdfsdf');
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -150,7 +142,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	one.checked = true;
 		  	});
 
-		  	buttonblue.on("hold", function() {
+		  	buttonblue.on("down", function() {
 
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -160,7 +152,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	two.checked = true;
 		  	});
 
-		  	buttonyellow.on("hold", function() {
+		  	buttonyellow.on("down", function() {
 
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -170,7 +162,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	three.checked = true;
 		  	});
 
-		  	buttongreen.on("hold", function() {
+		  	buttongreen.on("down", function() {
 
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
@@ -249,7 +241,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 				//50/50
 
 	  			if(lifeLine == true) {
-	  				buttonblack1.on("hold", testFun);
+	  				buttonblack1.on("down", testFun);
 
 	  				function testFun() {
 						var fifty = document.querySelector('.fiftyfifty');
@@ -270,12 +262,12 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	  					}
 
 	  					lifeLine = false;
-	  					buttonblack1.removeListener("hold", testFun);
+	  					buttonblack1.removeListener("down", testFun);
 	  				}
 	  			}
 
 	  			if(lifeLine2 == true) {
-		  			buttonblack2.on("hold", cats2);
+		  			buttonblack2.on("down", cats2);
 		  			function cats2() {
 						var audience = document.querySelector('.audience');
 						audience.src = "images/audienceused.png"; 
@@ -292,11 +284,12 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		  					// game.innerHTML = page12;
 		  					var horse = document.querySelector("#countDownAudience");
 		  					if(horse) {
-							var audienceTimeLeft = 12;
+							var audienceTimeLeft = 60;
 							var audienceGameTimer = setInterval(function(){
 								audienceTimeLeft--;
 								horse.innerHTML = audienceTimeLeft;
-								if(audienceTimeLeft == 1) {
+								if(audienceTimeLeft == 0) {
+									document.querySelector('#p12').style.display = "none";
 									clearInterval(audienceGameTimer);
 								}
 								},1000);
@@ -305,17 +298,17 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								lifeLine3 = true;
 								// renderQuestion(test4, posCat, randNumCat);
 								// return;
-							}, 12000);
+							}, 60000);
 						}
 						lifeLine2 = false;
-						buttonblack2.removeListener("hold", cats2);
+						buttonblack2.removeListener("down", cats2);
 		  			}
 		  		}
 
 
 	  				var cat1 = document.querySelector('#countDown');
 					var timeLeft;
-					timeLeft = 11;
+					timeLeft = 26;
 
 					var gameTimer = setInterval(function(){
 				    	timeLeft--;
@@ -333,7 +326,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 				    				}
 				    			}, 1000);
 				    			
-				    		}, 12000);
+				    		}, 60000);
 				    	}
 
 				    	if(timeLeft == 0) {
@@ -500,7 +493,7 @@ var stepper2 = new five.Stepper({
 //   });
 // }
 
-buttonblack1.on("hold", function() {
+buttonblack1.on("down", function() {
   	if(pageNumber <= 5)
   	functions[arr[pageNumber++]]();
   });

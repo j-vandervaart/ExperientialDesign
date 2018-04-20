@@ -8,6 +8,7 @@ var page2 = `<div id="p2">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
 	<img class="barCode" src="images/barcode.png">
+	<input type="text" id="barcode" name="barcode" autofocus>
 </div>
 <input type="text" id="barcode" name="barcode" autofocus>`;
 
@@ -90,11 +91,13 @@ var page8 =
 
 	<div id="p8">
 
+	<div id="topContent">
 	<div id="content">
 
-		<p class="timerText"><span id="countDown">10</span></p>
+		<p class="timerText"><span id="countDown">25</span></p>
 
 	<!--ASK AUDIENCE-->
+
 	<img class="audience" src="images/audience.svg">
 
 	<!--50/50-->
@@ -129,6 +132,8 @@ var page8 =
 	<div class="orange pointsNumber">300 pts</div>
 	<div class="orange pointsNumberUp">100 pts</div></div>
  
+	</div>
+
 	</div>
 
 
@@ -208,25 +213,25 @@ var page8 =
 		s-31.6,32.9-31.6,32.9v4.3c0,0,23.6,26.2,28.7,30.8c5.1,4.6,6.9,5.8,14.9,5.8h324.9l175.7,0.2c0,0,11-3.9,16.9-10.3
 		s24.8-26.7,24.8-26.7L-2156.6,4974L-2156.6,4974z"/>
 </g>
-<rect x="391" y="32.4" class="st6" width="1188.2" height="110"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="46" y="-142" width="800">    
-                    <div id="text1" style="font-size: 25px; color: white">I'm the question</div>                
+<rect x="331" y="32.4" class="st6" width="1188.2" height="110"/>
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="-142" width="800">    
+                    <div id="text1" style="font-size: 30px; color: white">I'm the question</div>                
             </foreignobject>
 <rect x="398" y="226" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="46" y="22" width="400">    
-                    <div id="text2" style="font-size: 25px; color: white">I'm answer one</div>                
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="3" width="400">    
+                    <div id="text2" style="font-size: 30px; color: white">I'm answer one</div>                
             </foreignobject>
 <rect x="398" y="337" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="56" y="130" width="400">    
-                    <div id="text3" style="font-size: 25px; color: white">I'm answer two</div>                
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="110" width="400">    
+                    <div id="text3" style="font-size: 30px; color: white">I'm answer two</div>                
             </foreignobject>
 <rect x="1043.8" y="226" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="706" y="22" width="400">    
-                    <div id="text4" style="font-size: 25px; color: white">I'm answer three</div>                
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="651" y="3" width="400">    
+                    <div id="text4" style="font-size: 30px; color: white">I'm answer three</div>                
             </foreignobject>
 <rect x="1043.8" y="339" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="706" y="130" width="400">    
-                    <div id="text5" style="font-size: 25px; color: white">I'm answer four</div>                
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="651" y="110" width="400">    
+                    <div id="text5" style="font-size: 30px; color: white">I'm answer four</div>                
             </foreignobject>
 </svg>
 

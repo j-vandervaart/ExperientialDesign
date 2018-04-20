@@ -29,8 +29,7 @@
 .hidden {
   display: none; }
 
-body {
-	margin: 0 auto;
+html, body {
 	font-family: proxima-nova, sans-serif;
 	background: linear-gradient(90deg, #0b1144, #12659d);
 	background-size: 500% 500%;
@@ -70,6 +69,11 @@ body p {
 	margin-left: 50px;
 	font-size: 23px;
 	margin-bottom: 75px;
+}
+
+#topContent {
+    width: 70%;
+    margin: 0 auto;
 }
 
 /*img.timer {
@@ -326,7 +330,8 @@ img.triangleGC {
 /* YOU LOSE */
 
 #p11 {
-	text-align: center;
+    text-align: center;
+    
 }
 
 
@@ -505,12 +510,13 @@ img.audienceOrangeSelection {
 }
 
 #barcode {
-  opacity: 0;
+  opacity: 1;
 }
 
 /*Ask Audience*/
 
 #p12 {
+  display: none;
   position: absolute;
   background: #000;
   background:rgba(0,0,0,0.85);
