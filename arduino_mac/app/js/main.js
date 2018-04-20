@@ -1,6 +1,8 @@
 var Readable = require('stream').Readable  
 var util = require('util')  
 var five = require('johnny-five')
+var mysql = require('mysql');
+var mysql = require('mysql-wrapper');
 
 // require('events').EventEmitter.prototype._maxListeners = 1;
 
@@ -16,8 +18,65 @@ process.__defineGetter__('stdin', function() {
 })
 
 // Global Vars
+var conn = mysql({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+  port: '8889',
+  database: 'proxima'
+});
+
+var barcode = document.getElementById('barcode');
+var valid = document.getElementById('valid');
 
 var game = document.querySelector("#mainGamePlay");
+
+function catchcode(){
+  console.log(this.value);
+  var code = this.value;
+  // title.innerHTML = 'Barcode Scan: ' + this.value;
+  barcode.value = "";
+  valid.innerHTML = "";
+  checkcode(code);
+}
+
+function checkcode(codes) {
+    console.log('Checking code validity...');
+    conn.query('SELECT * FROM codes {{where data}}', {
+      data: {
+        codes: codes
+      }
+    }, function (err, result) {
+      console.log(err, result);
+      if (result[0]) {
+       if(result[0].active == 0) {
+        valid.innerHTML = 'Code is valid. The game will now start.';
+        updatecode(codes);
+       } else {
+        valid.innerHTML = 'This code has already been used. The game can only be played once per card.';
+       }
+      } else {
+        valid.innerHTML = 'This code is not valid, please try again';
+      }
+    });
+}
+
+function updatecode(codes) {
+    console.log('Updating code validity...');
+    conn.query('UPDATE codes {{set data}} {{where find}}', {
+      data: {
+        active: 1
+      },
+      find: {
+        codes: codes
+      },
+    }, function (err, result) {
+      console.log(err, result);
+    });
+}
+
+barcode.addEventListener('change', catchcode);
 
 // Array Vars for Page Changing
 var pageNumber = 0;
@@ -28,6 +87,7 @@ var dog;
 
 // Creating Board Instances
 new five.Boards(["A", "B"]).on("ready", function(){
+
 
 	var b1 = this[0];
 	var b2 = this[1];
