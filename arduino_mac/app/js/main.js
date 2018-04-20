@@ -42,11 +42,12 @@ var dog;
 //   { id: "A", port: "/dev/cu.usbmodem14141" },
 //   { id: "B", port: "/dev/cu.usbmodem14131" }
 // Creating Board Instances
-new five.Boards(["A", "B"]).on("ready", function(){
+new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 
 	var b1 = this[0];
 	var b2 = this[1];
+	var b3 = this[2];
 
 	game.innerHTML = page1;
 
@@ -220,9 +221,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			var choice4 = document.querySelector('.st4');
 			winner.push(choice1, choice2, choice3, choice4);
 
-<<<<<<< HEAD
 
-=======
 			buttonred.on("down", function() {
 		  		console.log('sdfsdf');
 		    	for(var i = 0; i < winner.length; i++) {
@@ -262,7 +261,6 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	var four = document.querySelector("#one3");
 		    	four.checked = true;
 		  	});
->>>>>>> 6fcc73a2ba7b01aa4a8b19a01c69e3ed8a1ea769
 
 			var orange = document.querySelectorAll(".orange");
 			randNum = Math.floor(Math.random()*3);
