@@ -197,7 +197,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[0].style.fill = "yellow";
+		    	winner[0].style.fill = "#FB8F13";
 		    	var one = document.querySelector("#one0");
 		    	one.checked = true;
 		  	});
@@ -207,7 +207,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[1].style.fill = "yellow";
+		    	winner[1].style.fill = "#FB8F13";
 		    	var two = document.querySelector("#one1");
 		    	two.checked = true;
 		  	});
@@ -217,7 +217,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[2].style.fill = "yellow";
+		    	winner[2].style.fill = "#FB8F13";
 		    	var three = document.querySelector("#one2");
 		    	three.checked = true;
 		  	});
@@ -227,7 +227,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[3].style.fill = "yellow";
+		    	winner[3].style.fill = "#FB8F13";
 		    	var four = document.querySelector("#one3");
 		    	four.checked = true;
 		  	});
