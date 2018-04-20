@@ -27,7 +27,12 @@
 }
 
 .hidden {
-  display: none; }
+  display: none; 
+}
+
+#barcode {
+  opacity: 1;
+}
 
 html, body {
 	font-family: proxima-nova, sans-serif;
@@ -509,9 +514,6 @@ img.audienceOrangeSelection {
   margin-top: 20px;
 }
 
-#barcode {
-  opacity: 1;
-}
 
 /*Ask Audience*/
 

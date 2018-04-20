@@ -3,6 +3,7 @@ var util = require('util')
 var five = require('johnny-five')
 var mysql = require('mysql');
 var mysql = require('mysql-wrapper');
+var pixel = require("node-pixel");
 
 // require('events').EventEmitter.prototype._maxListeners = 1;
 
@@ -29,6 +30,9 @@ var conn = mysql({
 
 var barcode = document.getElementById('barcode');
 var valid = document.getElementById('valid');
+var primary = document.getElementById("primary");
+var secondary = document.getElementById("secondary");
+var isPlaying = false; 
 
 var game = document.querySelector("#mainGamePlay");
 
@@ -36,6 +40,9 @@ var game = document.querySelector("#mainGamePlay");
 var pageNumber = 0;
 var arr = ['loadpage2', 'loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
 var dog;
+
+var strip = null;
+var fps = 20; 
 
 // Load in page One
 // var ports = [
@@ -48,6 +55,14 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 	var b1 = this[0];
 	var b2 = this[1];
 	var b3 = this[2];
+
+	strip = new pixel.Strip({
+        data: 6,
+        length: 120,
+        color_order: pixel.COLOR_ORDER.GRB,
+        board: b3,
+        controller: "FIRMATA",
+    });
 
 	game.innerHTML = page1;
 
@@ -374,7 +389,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		  					// game.innerHTML = page12;
 		  					var horse = document.querySelector("#countDownAudience");
 		  					if(horse) {
-							var audienceTimeLeft = 60;
+							var audienceTimeLeft = 30;
 							var audienceGameTimer = setInterval(function(){
 								audienceTimeLeft--;
 								horse.innerHTML = audienceTimeLeft;
@@ -388,7 +403,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								lifeLine3 = true;
 								// renderQuestion(test4, posCat, randNumCat);
 								// return;
-							}, 60000);
+							}, 30000);
 						}
 						lifeLine2 = false;
 						buttonblack2.removeListener("down", cats2);
@@ -462,7 +477,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 				    				}
 				    			}, 1000);
 				    			
-				    		}, 60000);
+				    		}, 30000);
 				    	}
 
 				    	if(timeLeft == 0) {
@@ -639,5 +654,908 @@ buttonblack1.on("down", function() {
 
 // buttonblack2.on("up", function() {
 //   });
+
+function SpeedStart() {
+  secondary.src='sounds/speed/question/start.mp3';
+  secondary.volume = 1;
+  secondary.load(); 
+  secondary.play();
+  StartLight();
+  setTimeout(function(){SpeedRound(); }, 5000);
+}
+
+function SpeedRound() {
+  primary.src='sounds/speed/question/main.mp3';
+  primary.load(); 
+  primary.play();
+  SpeedRoundLight();
+
+}
+
+function SpeedWin() {
+  secondary.src='sounds/speed/win/main.mp3';
+  secondary.load(); 
+  primary.volume = 0.2;
+  secondary.play();
+  SpeedWinLight();
+  setTimeout(function(){ primary.volume = 1; SpeedRoundLight(); }, 2000);
+
+
+}
+
+function SpeedLose() {
+  primary.src='sounds/speed/lose/main.mp3';
+  primary.load(); 
+  primary.play();
+  LoseLight();
+  setTimeout(function(){ EndingCredit(); }, 6000);
+}
+
+function SpeedFinalWin() {
+  primary.src='sounds/speed/win/final.mp3';
+  primary.load(); 
+  primary.play();
+  FinalWinLight();
+}
+
+
+//MIDDLE ROUND
+function MiddleStart() {
+  secondary.src='sounds/middle/question/start.mp3';
+  secondary.volume = 1;
+  secondary.load(); 
+  secondary.play();
+  StartLight();
+  setTimeout(function(){MiddleRound(); }, 2000);
+}
+function MiddleRound() {
+  MiddleRoundLight();
+  primary.src='sounds/middle/question/main.mp3';
+  primary.load(); 
+  primary.play();
+}
+function MiddleQuery() {
+  QueryLight();
+  secondary.src='sounds/middle/question/answer.mp3';
+  secondary.load(); 
+  secondary.play();
+  setTimeout(function(){ primary.pause(); }, 300);
+}
+function MiddleWin() {
+  WinLight();
+  primary.src='sounds/middle/win/main.mp3';
+  primary.load(); 
+  primary.play();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+}
+function MiddleLose() {
+  LoseLight();
+  primary.src='sounds/middle/lose/main.mp3';
+  primary.load(); 
+  primary.play();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+  setTimeout(function(){ EndingCredit(); }, 10000);
+}
+function MiddleFinalWin() {
+  primary.src='sounds/middle/win/final.mp3';
+  primary.load(); 
+  primary.play();
+  FinalWinLight();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+}
+
+//DEEP ROUND
+function deepStart() {
+  StartLight();
+  secondary.src='sounds/deep/question/start.mp3';
+  secondary.volume = 1;
+  secondary.load(); 
+  secondary.play();
+  setTimeout(function(){DeepRound(); }, 2000);
+}
+function DeepRound() {
+  DeepRoundLight();
+  primary.src='sounds/deep/question/main.mp3';
+  primary.load(); 
+  primary.play();
+}
+function deepQuery() {
+  QueryLight();
+  secondary.src='sounds/deep/question/answer.mp3';
+  secondary.load(); 
+  secondary.play();
+  setTimeout(function(){ primary.pause(); }, 300);
+}
+function deepWin() {
+  WinLight();
+  primary.src='sounds/deep/win/main.mp3';
+  primary.load(); 
+  primary.play();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+}
+function DeepLose() {
+  LoseLight();
+  primary.src='sounds/deep/lose/main.mp3';
+  primary.load(); 
+  primary.play();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+  setTimeout(function(){ EndingCredit(); }, 6000);
+}
+
+//Million ROUND
+function millionStart() {
+  StartLight();
+  secondary.src='sounds/million/question/start.mp3';
+  secondary.volume = 1;
+  secondary.load(); 
+  secondary.play();
+  setTimeout(function(){millionRound(); }, 2000);
+}
+function millionRound() {
+  millionRoundLight();
+  primary.src='sounds/million/question/main.mp3';
+  primary.load(); 
+  primary.play();
+}
+function millionQuery() {
+  QueryLight();
+  secondary.src='sounds/million/question/answer.mp3';
+  secondary.load(); 
+  secondary.play();
+  setTimeout(function(){ primary.pause(); }, 300);
+}
+function millionWin() {
+  millionWinLight();
+  primary.src='sounds/million/win/main.mp3';
+  primary.load(); 
+  primary.play();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+}
+function millionLose() {
+  LoseLight();
+  primary.src='sounds/million/lose/main.mp3';
+  primary.load(); 
+  primary.play();
+  setTimeout(function(){ secondary.volume = 0; }, 800);
+  setTimeout(function(){ EndingCredit(); }, 6000);
+}
+
+// //OTHER SOUNDS
+function EndingCredit() {
+  EndingLight();
+  primary.src='sounds/other/ending.mp3';
+  primary.load(); 
+  primary.play();
+}
+function AudienceLifeline() {
+  AudienceLifelineLight();
+  secondary.src='sounds/other/audience.mp3';
+  secondary.load(); 
+  secondary.play();
+  primary.volume = 0.1;
+  setTimeout(function(){ primary.volume = 1; }, 61000);
+}
+function FiftyFiftyLifeline() {
+  FiftyFiftyLight();
+  secondary.src='sounds/other/fiftyfifty-edit.mp3';
+  secondary.load(); 
+  secondary.play();
+  primary.volume = 0.1;
+  setTimeout(function(){ primary.volume = 1; }, 1000);
+}
+
+function StopSound() {
+  primary.pause();
+  secondary.pause();
+}
+//ESSENTIAL SOUND AUDIO 
+var primary = document.getElementById("primary");
+var secondary = document.getElementById("secondary");
+var isPlaying = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//LIGHTS SETUP
+var PixelForward = false;
+var StartTimer = setInterval(function () {
+    if (PixelForward) 
+    strip.shift(1, pixel.FORWARD, true);
+    strip.show();
+    // your function
+}, 1000 / 12);
+
+var PixelForward2 = false;
+var DeepTimer = setInterval(function () {
+    if (PixelForward2) 
+    strip.shift(1, pixel.FORWARD, true);
+    strip.show();
+    // your function
+}, 10000 / 12);
+
+var PixelForward3 = false;
+var MiddleTimer = setInterval(function () {
+    if (PixelForward3) 
+    strip.shift(1, pixel.FORWARD, true);
+    strip.show();
+    // your function
+}, 13000 / 12);
+
+var PixelForward4 = false;
+var MillionTimer = setInterval(function () {
+    if (PixelForward4) 
+    strip.shift(1, pixel.FORWARD, true);
+    strip.show();
+    // your function
+}, 13000 / 12);
+
+
+var PixelRando = false;
+var Start = setInterval(function () {
+    var i;
+    var b;
+    var m;
+    if (PixelRando) {
+      strip.color('#000');
+      a = Math.floor(Math.random() * 120);
+      b = Math.floor(Math.random() * 120);
+      c = Math.floor(Math.random() * 120);
+      d = Math.floor(Math.random() * 120);
+      e = Math.floor(Math.random() * 120);
+      f = Math.floor(Math.random() * 120);
+      g = Math.floor(Math.random() * 120);
+      h = Math.floor(Math.random() * 120);
+      i = Math.floor(Math.random() * 120);
+      j = Math.floor(Math.random() * 120);
+      k = Math.floor(Math.random() * 120);
+      m = Math.floor(Math.random() * 120);
+      secondaryColour = 'purple';
+      strip.pixel(a).color(secondaryColour);
+      strip.pixel(b).color('blue');
+      strip.pixel(c).color(secondaryColour);
+      strip.pixel(d).color(secondaryColour);
+      strip.pixel(e).color('blue');
+      strip.pixel(f).color(secondaryColour);
+      strip.pixel(g).color(secondaryColour);
+      strip.pixel(h).color('blue');
+      strip.pixel(i).color(secondaryColour);
+      strip.pixel(j).color(secondaryColour);
+      strip.pixel(k).color('blue');
+      strip.pixel(m).color(secondaryColour);
+      strip.show();
+    }
+}, 500 / 12);
+
+
+var PixelRando2 = false;
+var Completo = setInterval(function () {
+    var i;
+    var b;
+    var m;
+    var s;
+    if (PixelRando2) {
+      strip.color('#000');
+      a = Math.floor(Math.random() * 120);
+      b = Math.floor(Math.random() * 120);
+      c = Math.floor(Math.random() * 120);
+      d = Math.floor(Math.random() * 120);
+      e = Math.floor(Math.random() * 120);
+      f = Math.floor(Math.random() * 120);
+      g = Math.floor(Math.random() * 120);
+      h = Math.floor(Math.random() * 120);
+      i = Math.floor(Math.random() * 120);
+      j = Math.floor(Math.random() * 120);
+      k = Math.floor(Math.random() * 120);
+      m = Math.floor(Math.random() * 120);
+      secondaryColour = 'purple';
+      strip.pixel(a).color('blue');
+      strip.pixel(b).color('blue');
+      strip.pixel(c).color('white');
+      strip.pixel(d).color(secondaryColour);
+      strip.pixel(e).color('blue');
+      strip.pixel(f).color('green');
+      strip.pixel(g).color('white');
+      strip.pixel(h).color('blue');
+      strip.pixel(i).color(secondaryColour);
+      strip.pixel(j).color('green');
+      strip.pixel(k).color('blue');
+      strip.pixel(m).color(secondaryColour);
+      strip.show();
+    }
+}, 800 / 12);
+
+
+var PixelRandoEnd = false;
+var CompletoEnd = setInterval(function () {
+    var i;
+    var b;
+    var m;
+    var s;
+    if (PixelRandoEnd) {
+      strip.color('#000');
+      a = Math.floor(Math.random() * 120);
+      b = Math.floor(Math.random() * 120);
+      c = Math.floor(Math.random() * 120);
+      d = Math.floor(Math.random() * 120);
+      e = Math.floor(Math.random() * 120);
+      f = Math.floor(Math.random() * 120);
+      g = Math.floor(Math.random() * 120);
+      h = Math.floor(Math.random() * 120);
+      i = Math.floor(Math.random() * 120);
+      j = Math.floor(Math.random() * 120);
+      k = Math.floor(Math.random() * 120);
+      m = Math.floor(Math.random() * 120);
+      n = Math.floor(Math.random() * 120);
+      o = Math.floor(Math.random() * 120);
+      p = Math.floor(Math.random() * 120);
+      q = Math.floor(Math.random() * 120);
+      secondaryColour = 'purple';
+      strip.pixel(a).color('blue');
+      strip.pixel(b).color('red');
+      strip.pixel(c).color('white');
+      strip.pixel(d).color('red');
+      strip.pixel(e).color('blue');
+      strip.pixel(f).color('green');
+      strip.pixel(g).color('red');
+      strip.pixel(h).color('blue');
+      strip.pixel(i).color('purple');
+      strip.pixel(j).color('green');
+      strip.pixel(k).color('blue');
+      strip.pixel(m).color('purple');
+      strip.pixel(n).color('purple');
+      strip.pixel(o).color('green');
+      strip.pixel(p).color('blue');
+      strip.pixel(q).color('purple');
+      strip.show();
+    }
+}, 1200 / 12);
+
+
+
+
+//Lights Functions
+function StartLight() {
+  PixelRando = true;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelRandoEnd = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+}
+
+function SpeedRoundLight() {
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = true;
+  PixelRandoEnd = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  strip.show();
+  strip.color('purple');
+  var secondaryColour = 'white';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  }
+  strip.show();
+}
+
+function SpeedWinLight() {
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = true;
+  PixelForward2 = false;
+  PixelRandoEnd = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  strip.show();
+  strip.color('green');
+  var secondaryColour = 'white';
+  strip.pixel(0).color(secondaryColour);
+  strip.pixel(1).color(secondaryColour);
+  strip.pixel(8).color(secondaryColour);
+  strip.pixel(9).color(secondaryColour);
+  strip.pixel(16).color(secondaryColour);
+  strip.pixel(17).color(secondaryColour);
+  strip.pixel(24).color(secondaryColour);
+  strip.pixel(25).color(secondaryColour);
+  strip.pixel(32).color(secondaryColour);
+  strip.pixel(33).color(secondaryColour);
+  strip.pixel(40).color(secondaryColour);
+  strip.pixel(41).color(secondaryColour);
+  strip.pixel(48).color(secondaryColour);
+  strip.pixel(49).color(secondaryColour);
+  strip.pixel(56).color(secondaryColour);
+  strip.pixel(57).color(secondaryColour);
+  strip.pixel(64).color(secondaryColour);
+  strip.pixel(65).color(secondaryColour);
+  strip.pixel(72).color(secondaryColour);
+  strip.pixel(73).color(secondaryColour);
+  strip.pixel(80).color(secondaryColour);
+  strip.pixel(81).color(secondaryColour);
+  strip.pixel(88).color(secondaryColour);
+  strip.pixel(89).color(secondaryColour);
+  strip.pixel(96).color(secondaryColour);
+  strip.pixel(97).color(secondaryColour);
+  strip.pixel(104).color(secondaryColour);
+  strip.pixel(105).color(secondaryColour);
+  strip.pixel(102).color(secondaryColour);
+  strip.pixel(103).color(secondaryColour);
+  strip.pixel(110).color(secondaryColour);
+  strip.pixel(111).color(secondaryColour);
+  strip.pixel(118).color(secondaryColour);
+  strip.pixel(119).color(secondaryColour);
+  strip.show();
+}
+
+function LoseLight() {
+  PixelRando = false;
+  PixelForward = false;
+  PixelRando2 = false;
+  PixelRandoEnd = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  var i = -1;                   
+  function colorLoop () {           
+     setTimeout(function () {     
+        i++;                    
+        if (i < 120) {
+           strip.pixel(i).color('red');     
+           strip.show();    
+           colorLoop();            
+        }                   
+     }, 8);
+  }
+  colorLoop(); 
+}
+
+function FinalWinLight() {
+  PixelRando = false;
+  PixelForward = false;
+  PixelForward2 = false;
+  PixelRandoEnd = false;
+  PixelForward4 = false;
+  PixelForward3 = false;
+  var i = -1;   
+  function colorLoop () {           
+    setTimeout(function () {     
+       i++;                    
+       if (i < 120) {
+          strip.pixel(i).color('green');     
+          strip.show();    
+          colorLoop();            
+       }                   
+    }, 8);
+ }
+ colorLoop(); 
+  setTimeout(function () {   
+    var i = -1;     
+  function colorLoop () {           
+    setTimeout(function () {     
+       i++;                    
+       if (i < 120) {
+          strip.pixel(i).color('purple');     
+          strip.show();    
+          colorLoop();            
+       }                   
+    }, 8);
+ }
+ colorLoop(); 
+}, 1600);
+setTimeout(function () {
+  PixelRando2 = true;
+}, 2800);
+setTimeout(function () {
+  for(var i = 0; i < 120; i++) {
+    strip.pixel(i).color('#000');     
+    strip.show();             
+ } 
+  strip.color('#000');
+  strip.show();                        
+  PixelRando2 = false;
+}, 7600);
+
+}
+
+function DeepRoundLight() {
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelForward3 = false;
+  PixelRandoEnd = false;
+  PixelForward2 = true;
+  PixelForward4 = false;
+  strip.show();
+  strip.color('purple');
+  for(var i = 0; i < 120; i += 2) {
+    strip.pixel(i).color('#000');            
+ }  
+  strip.show();
+}
+
+function QueryLight() {
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelRandoEnd = false;
+  PixelForward4 = false;
+  var i = -1;        
+  function colorLoop () {           
+    setTimeout(function () {    
+       i++;                    
+       if (i < 120) {
+          strip.pixel(i).color('#000');     
+          strip.show();    
+          colorLoop();            
+       }                   
+    }, 18);
+ }
+ colorLoop(); 
+}
+
+function WinLight() {
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelRandoEnd = false;
+  PixelForward4 = false;
+  var i = -1;        
+  function colorLoop () {           
+    setTimeout(function () {    
+       i++;                    
+       if (i < 120) {
+          strip.pixel(i).color('green');     
+          strip.show();    
+          colorLoop();            
+       }                   
+    }, 12);
+ }
+ colorLoop(); 
+}
+
+function MiddleRoundLight() {
+    PixelRando=false;
+    PixelRando2 = false;
+    PixelForward = false;
+    PixelRandoEnd = false;
+    PixelForward2 = false;
+    PixelForward3 = true;
+    PixelForward4 = false;
+    strip.show();
+    strip.color('#000');
+    for(var i = 0; i < 120; i += 3) {
+      strip.pixel(i).color('blue');   
+   }  
+    strip.show();
+  
+  
+  strip.color('rgb(128,0,128)');
+  strip.show();
+  
+  
+  }
+
+
+function AudienceLifelineLight() {
+//   PixelRando=false;
+//   PixelRando2 = false;
+  var active;
+  if (PixelForward) {
+    active = 1;
+  } else if(PixelForward2) {
+    active = 2;
+  }else if(PixelForward3) {
+    active = 3;
+  }else if(PixelForward4) {
+    active = 4;
+  }
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = true;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  PixelRandoEnd = false;
+  strip.show();
+  strip.color('#000');
+  var secondaryColour = 'white';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  strip.pixel(i+1).color('blue');
+  strip.pixel(i+2).color(secondaryColour);
+  }
+  strip.show();
+
+
+
+  setTimeout(function () {    
+    PixelForward = false;
+    for(var i = 0; i < 120; i += 2) {
+      strip.pixel(i).color('purple');            
+   }  
+    strip.show();     
+ }, 30000);
+
+ setTimeout(function () {    
+  if (active === 1) {
+    SpeedRoundLight();
+  } else if(active === 2) {
+    DeepRoundLight();
+  }else if(active === 3) {
+    MiddleRoundLight();
+  }else if(active === 4) {
+    millionRoundLight();
+  }
+}, 30500);
+
+}
+
+
+function millionRoundLight() {
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelForward2 = false;
+  PixelRandoEnd = false;
+  PixelForward3 = false;
+  PixelForward4 = true;
+  strip.show();
+  strip.color('#000');
+  for(var i = 0; i < 120; i += 14) {
+    strip.pixel(i).color('purple');  
+    strip.pixel(i+7).color('blue');   
+ }  
+  strip.show();
+
+
+strip.color('rgb(128,0,128)');
+strip.show();
+}
+
+function millionWinLight() {
+    PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = true;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelRandoEnd = false;
+  PixelForward4 = false;
+  strip.show();
+  strip.color('#000');
+  var secondaryColour = 'white';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  strip.pixel(i+2).color(secondaryColour);
+  }
+  strip.show();
+
+  setTimeout(function () {    
+    strip.color('#000');
+    var secondaryColour = 'blue';
+    for(var i = 0; i < 120; i+=8) {
+    strip.pixel(i).color(secondaryColour);
+    strip.pixel(i+2).color(secondaryColour);
+    }
+    strip.show();   
+ }, 2500);
+
+ setTimeout(function () {    
+  strip.color('#000');
+  var secondaryColour = 'green';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  strip.pixel(i+2).color(secondaryColour);
+  }
+  strip.show();   
+}, 6000);
+
+setTimeout(function () {    
+  strip.color('#000');
+  var secondaryColour = 'purple';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  strip.pixel(i+2).color(secondaryColour);
+  }
+  strip.show();   
+}, 5000);
+
+setTimeout(function () {    
+  strip.color('#000');
+  var secondaryColour = 'purple';
+  var secondaryColour2 = 'blue';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  strip.pixel(i+2).color(secondaryColour);
+  strip.pixel(i+4).color(secondaryColour2);
+  strip.pixel(i+6).color(secondaryColour2);
+  }
+  strip.show();   
+}, 7500);
+setTimeout(function () {    
+  strip.color('#000');
+  var secondaryColour = 'purple';
+  var secondaryColour2 = 'green';
+  for(var i = 0; i < 120; i+=8) {
+  strip.pixel(i).color(secondaryColour);
+  strip.pixel(i+2).color(secondaryColour);
+  strip.pixel(i+4).color(secondaryColour2);
+  strip.pixel(i+6).color(secondaryColour2);
+  }
+  strip.show();   
+}, 10000);
+
+setTimeout(function () {     
+PixelRando=false;
+PixelRando2 = false;
+PixelForward = false;
+PixelForward2 = false;
+PixelRandoEnd = false;
+PixelForward3 = false;
+PixelForward4 = false;
+var i = -1;        
+function colorLoop () {           
+  setTimeout(function () {    
+     i++;                    
+     if (i < 120) {
+        strip.pixel(i).color('green');     
+        strip.show();    
+        colorLoop();            
+     }                   
+  }, 12);
+}
+colorLoop();   
+}, 17500);
+
+  
+}
+
+function FiftyFiftyLight() {
+  var active;
+  if (PixelForward) {
+    active = 1;
+  } else if(PixelForward2) {
+    active = 2;
+  }else if(PixelForward3) {
+    active = 3;
+  }else if(PixelForward4) {
+    active = 4;
+  }
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = true;
+  PixelForward2 = false;
+  PixelRandoEnd = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  strip.color('blue');
+  strip.show();
+
+  setTimeout(function () {    
+    strip.color('purple');
+    strip.show(); 
+ }, 400);
+
+ setTimeout(function () {    
+  strip.color('blue');
+  strip.show(); 
+}, 1000);
+
+ setTimeout(function () {    
+  if (active === 1) {
+    SpeedRoundLight();
+  } else if(active === 2) {
+    DeepRoundLight();
+  }else if(active === 3) {
+    MiddleRoundLight();
+  }else if(active === 4) {
+    millionRoundLight();
+  }
+}, 2000);
+}
+
+function PregameLight(){
+  PixelRando=false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelRandoEnd = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  strip.color('purple');
+  strip.show();
+  
+}
+
+function IntroLight() {
+  PixelRando = false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelRandoEnd = true;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  setTimeout(function () {    
+    PixelRandoEnd = false;
+    strip.color('purple');
+    strip.show('#000');
+  }, 23500);
+}
+
+function EndingLight() {
+  PixelRando = false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelRandoEnd = true;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  setTimeout(function () {    
+    PixelRandoEnd = false;
+    strip.color('#000');
+    strip.show();
+  }, 31000);
+}
+
+
+function StopLight() {
+  PixelRando = false;
+  PixelRando2 = false;
+  PixelForward = false;
+  PixelRandoEnd = false;
+  PixelForward2 = false;
+  PixelForward3 = false;
+  PixelForward4 = false;
+  strip.color('#000');
+  strip.show();
+}
+
+
+
+
+
+
+ strip.on("ready", function() {
+
+  console.log("Strip ready, let's go");
+  PregameLight();
+  // var colors = ["blue", "blue", "blue", "blue", "blue", "blue", "white"];
+
+  // var colors = ["red", "green", "blue", "yellow", "cyan", "magenta", "white"];
+  // var current_colors = [0,1,2,3,4];
+  // var current_pos = [0,1,2,3,4];
+  // var blinker = setInterval(function() {
+
+  //     strip.color("#000"); // blanks it out
+
+  //     for (var i=0; i< current_pos.length; i++) {
+  //         if (++current_pos[i] >= strip.length) {
+  //             current_pos[i] = 0;
+  //             if (++current_colors[i] >= colors.length) current_colors[i] = 0;
+  //         }
+  //         strip.pixel(current_pos[i]).color(colors[current_colors[i]]);
+  //     }
+
+  //     strip.show();
+  // }, 1000/fps);
+
+  strip.color("#000");
+  strip.show();
+ });
 
 });
