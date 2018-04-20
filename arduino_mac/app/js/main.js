@@ -220,7 +220,49 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			var choice4 = document.querySelector('.st4');
 			winner.push(choice1, choice2, choice3, choice4);
 
+<<<<<<< HEAD
 
+=======
+			buttonred.on("down", function() {
+		  		console.log('sdfsdf');
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[0].style.fill = "#FB8F13";
+		    	var one = document.querySelector("#one0");
+		    	one.checked = true;
+		  	});
+
+		  	buttonblue.on("down", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[1].style.fill = "#FB8F13";
+		    	var two = document.querySelector("#one1");
+		    	two.checked = true;
+		  	});
+
+		  	buttonyellow.on("down", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[2].style.fill = "#FB8F13";
+		    	var three = document.querySelector("#one2");
+		    	three.checked = true;
+		  	});
+
+		  	buttongreen.on("down", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[3].style.fill = "#FB8F13";
+		    	var four = document.querySelector("#one3");
+		    	four.checked = true;
+		  	});
+>>>>>>> 6fcc73a2ba7b01aa4a8b19a01c69e3ed8a1ea769
 
 			var orange = document.querySelectorAll(".orange");
 			randNum = Math.floor(Math.random()*3);
