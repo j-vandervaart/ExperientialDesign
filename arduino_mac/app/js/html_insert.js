@@ -8,9 +8,23 @@ var page2 = `<div id="p2">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
 	<img class="barCode" src="images/barcode.png">
-	<input type="text" id="barcode" name="barcode" autofocus>
-</div>
-<input type="text" id="barcode" name="barcode" autofocus>`;
+</div>`;
+
+/*Bar code good page*/
+
+var pagebarcodeGood = `<div id="p13">
+	<img class="proximaLogoSmall" src="images/proxima.png">
+	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
+	<img class="barCode" src="images/barcodegood.png">
+</div>`;
+
+/*Bar code good page*/
+
+var pagebarcodeBad = `<div id="p14">
+	<img class="proximaLogoSmall" src="images/proxima.png">
+	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
+	<img class="barCode" src="images/barcodebad.png">
+</div>`;
 
 /*Instructional Pages*/
 

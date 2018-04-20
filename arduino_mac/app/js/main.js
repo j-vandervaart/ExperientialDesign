@@ -32,59 +32,15 @@ var valid = document.getElementById('valid');
 
 var game = document.querySelector("#mainGamePlay");
 
-function catchcode(){
-  console.log(this.value);
-  var code = this.value;
-  // title.innerHTML = 'Barcode Scan: ' + this.value;
-  barcode.value = "";
-  valid.innerHTML = "";
-  checkcode(code);
-}
-
-function checkcode(codes) {
-    console.log('Checking code validity...');
-    conn.query('SELECT * FROM codes {{where data}}', {
-      data: {
-        codes: codes
-      }
-    }, function (err, result) {
-      console.log(err, result);
-      if (result[0]) {
-       if(result[0].active == 0) {
-        valid.innerHTML = 'Code is valid. The game will now start.';
-        updatecode(codes);
-       } else {
-        valid.innerHTML = 'This code has already been used. The game can only be played once per card.';
-       }
-      } else {
-        valid.innerHTML = 'This code is not valid, please try again';
-      }
-    });
-}
-
-function updatecode(codes) {
-    console.log('Updating code validity...');
-    conn.query('UPDATE codes {{set data}} {{where find}}', {
-      data: {
-        active: 1
-      },
-      find: {
-        codes: codes
-      },
-    }, function (err, result) {
-      console.log(err, result);
-    });
-}
-
-barcode.addEventListener('change', catchcode);
-
 // Array Vars for Page Changing
 var pageNumber = 0;
-var arr = ['loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
+var arr = ['loadpage2', 'loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
 var dog;
 
 // Load in page One
-
+// var ports = [
+//   { id: "A", port: "/dev/cu.usbmodem14141" },
+//   { id: "B", port: "/dev/cu.usbmodem14131" }
 // Creating Board Instances
 new five.Boards(["A", "B"]).on("ready", function(){
 
@@ -102,6 +58,78 @@ new five.Boards(["A", "B"]).on("ready", function(){
 
 	loadpage2: function() {
 		game.innerHTML = page2;
+
+
+		var conn = mysql({
+		  host: "localhost",
+		  user: "root",
+		  password: "root",
+		  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+		  port: '8889',
+		  database: 'proxima'
+		});
+
+		  //Variables Defining
+		// var title = document.getElementById('title');
+		// var valid = document.getElementById('valid');
+		var barcode = document.getElementById('barcode');
+
+		function catchcode(){
+		  console.log(this.value);
+		  var code = this.value;
+		  // title.innerHTML = 'Barcode Scan: ' + this.value;
+		  barcode.value = "";
+		  // valid.innerHTML = "";
+		  checkcode(code);
+		}
+
+		function checkcode(codes) {
+		    console.log('Checking code validity...');
+		    conn.query('SELECT * FROM codes {{where data}}', {
+		      data: {
+		        codes: codes
+		      }
+		    }, function (err, result) {
+		      console.log(err, result);
+		      if (result[0]) {
+		       if(result[0].active == 0) {
+		       	game.innerHTML = pagebarcodeGood;
+		       	setTimeout(function() {
+		       		pageNumber = 3;
+				    functions[arr[2]]();
+		       	}, 5000);
+		        // valid.innerHTML = 'Code is valid. The game will now start.';
+		        updatecode(codes);
+		       } else {
+		       	game.innerHTML = pagebarcodeBad;
+		       	setTimeout(function() {
+		       		pageNumber = 0;
+		       		StopSound();
+					game.innerHTML = page1;
+		       	}, 5000);
+		        // valid.innerHTML = 'This code has already been used. The game can only be played once per card.';
+		       }
+		      } else {
+		        // valid.innerHTML = 'This code is not valid, please try again';
+		      }
+		    });
+		}
+
+		function updatecode(codes) {
+		    console.log('Updating code validity...');
+		    conn.query('UPDATE codes {{set data}} {{where find}}', {
+		      data: {
+		        active: 0
+		      },
+		      find: {
+		        codes: codes
+		      },
+		    }, function (err, result) {
+		      console.log(err, result);
+		    });
+		}
+
+		barcode.addEventListener('change', catchcode);
 	},
 
 	loadpage3: function() {
@@ -138,8 +166,8 @@ new five.Boards(["A", "B"]).on("ready", function(){
 	loadpageIntroVideo: function() {
   		game.innerHTML = pageIntroVideo;
   		setTimeout(function() {
-  			functions[arr[6]]()
-  		}, 25000);
+  			functions[arr[7]]()
+  		}, 100);
 	},
 
 	loadpage8: function() {
@@ -159,7 +187,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		// Switching Motors vars
 		var servoSwitch = 0;
 		var servo = [];
-		servo.push(stepper, stepper2);
+		// servo.push(stepper, stepper2);
 		
 		// Quiz vars
 		var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
@@ -192,45 +220,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 			var choice4 = document.querySelector('.st4');
 			winner.push(choice1, choice2, choice3, choice4);
 
-			buttonred.on("down", function() {
-		  		console.log('sdfsdf');
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[0].style.fill = "yellow";
-		    	var one = document.querySelector("#one0");
-		    	one.checked = true;
-		  	});
 
-		  	buttonblue.on("down", function() {
-
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[1].style.fill = "yellow";
-		    	var two = document.querySelector("#one1");
-		    	two.checked = true;
-		  	});
-
-		  	buttonyellow.on("down", function() {
-
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[2].style.fill = "yellow";
-		    	var three = document.querySelector("#one2");
-		    	three.checked = true;
-		  	});
-
-		  	buttongreen.on("down", function() {
-
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[3].style.fill = "yellow";
-		    	var four = document.querySelector("#one3");
-		    	four.checked = true;
-		  	});
 
 			var orange = document.querySelectorAll(".orange");
 			randNum = Math.floor(Math.random()*3);
@@ -270,10 +260,10 @@ new five.Boards(["A", "B"]).on("ready", function(){
 					pos = 0;
 					correct = 0;
 					floatingBox = 9;
-					servo[servoSwitch].cw().step(5000, function() {
-		   			});
-		   			servoSwitch++;
-					return false;
+					// servo[servoSwitch].cw().step(5000, function() {
+		   // 			});
+		   // 			servoSwitch++;
+					// return false;
 				}
 			
 				// Setting Questions and Answers
@@ -365,12 +355,58 @@ new five.Boards(["A", "B"]).on("ready", function(){
 		  			}
 		  		}
 
+		  	var cat1 = document.querySelector('#countDown');
+			var timeLeft;
+			timeLeft = 26;
 
-	  				var cat1 = document.querySelector('#countDown');
-					var timeLeft;
-					timeLeft = 26;
 
-					var gameTimer = setInterval(function(){
+	  		buttonred.on("down", function() {
+		  		console.log('sdfsdf');
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[0].style.fill = "yellow";
+		    	var one = document.querySelector("#one0");
+		    	one.checked = true;
+		    	timeLeft = 1;
+		  	});
+
+		  	buttonblue.on("down", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[1].style.fill = "yellow";
+		    	var two = document.querySelector("#one1");
+		    	two.checked = true;
+		    	timeLeft = 1;
+		  	});
+
+		  	buttonyellow.on("down", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[2].style.fill = "yellow";
+		    	var three = document.querySelector("#one2");
+		    	three.checked = true;
+		    	timeLeft = 1;
+		  	});
+
+		  	buttongreen.on("down", function() {
+
+		    	for(var i = 0; i < winner.length; i++) {
+		    		winner[i].style.fill = "url(#Path_8_1_)";
+		    	}
+		    	winner[3].style.fill = "yellow";
+		    	var four = document.querySelector("#one3");
+		    	four.checked = true;
+		    	timeLeft = 1;
+		  	});
+
+
+	  		
+			var gameTimer = setInterval(function(){
 				    	timeLeft--;
 				    	cat1.textContent = timeLeft;
 				    	if(lifeLine3 == false) {
@@ -429,7 +465,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 						  		}else if(pos = 9) {
 						  			MillionLose();
 						  		}
-								setTimeout(functions[arr[7]], 5000);
+								setTimeout(functions[arr[8]], 5000);
 								setTimeout(function() {
 									StopSound();
 									game.innerHTML = page1;
@@ -484,7 +520,7 @@ new five.Boards(["A", "B"]).on("ready", function(){
 								correct = 0;
 								pageNumber = 0;
 								floatingBox = 9;
-								setTimeout(functions[arr[7]], 5000);
+								setTimeout(functions[arr[8]], 5000);
 								setTimeout(function() {
 									StopSound();
 									game.innerHTML = page1;
@@ -533,19 +569,19 @@ var buttonblack2 = new five.Button({
 	board: b2
 });
 
-var stepper = new five.Stepper({
-    type: five.Stepper.TYPE.FOUR_WIRE,
-    stepsPerRev: 150,
-    pins: [6,7,8,9],
-    board: b1
-});
+// var stepper = new five.Stepper({
+//     type: five.Stepper.TYPE.FOUR_WIRE,
+//     stepsPerRev: 150,
+//     pins: [6,7,8,9],
+//     board: b1
+// });
 
-var stepper2 = new five.Stepper({
-    type: five.Stepper.TYPE.FOUR_WIRE,
-    stepsPerRev: 150,
-    pins: [10,11,12,13],
-    board: b1  
-});
+// var stepper2 = new five.Stepper({
+//     type: five.Stepper.TYPE.FOUR_WIRE,
+//     stepsPerRev: 150,
+//     pins: [10,11,12,13],
+//     board: b1  
+// });
 
 // function moveCC() {
 //   stepper.cw().step(5000, function() {
@@ -554,8 +590,11 @@ var stepper2 = new five.Stepper({
 // }
 
 buttonblack1.on("down", function() {
-  	if(pageNumber <= 5)
-  	functions[arr[pageNumber++]]();
+  	if(pageNumber < 1) { 
+  		functions[arr[pageNumber++]]();
+  	}else if(pageNumber >= 2 && pageNumber <= 6) {
+  		functions[arr[pageNumber++]]();
+  	}
   });
 
 // buttonblack2.on("up", function() {
