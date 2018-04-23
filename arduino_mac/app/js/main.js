@@ -213,13 +213,13 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		// var currentPos = pos; 
 
 		function renderQuestion(test4, posCat, randNumCat){
-			if(pos >= 0 && pos <= 2) {
+			if(pos = 0) {
 				console.log('1');
   				SpeedStart();
-	  		}else if(pos >= 3 && pos <= 5) {
+	  		}else if(pos = 3) {
 	  			console.log('2');
 	  			MiddleStart();
-	  		}else if(pos >= 6 && pos <= 8) {
+	  		}else if(pos = 6) {
 	  			DeepStart();
 	  		}else if(pos = 9) {
 	  			MillionStart();
@@ -376,7 +376,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		  			function cats2() {
 						var audience = document.querySelector('.audience');
 						audience.src = "images/audienceused.png"; 
-						StopSound();
+						// StopSound();
 						setTimeout(AudienceLifeline(), 1000);
 						// setTimeout(SpeedRound(), 10000);  
 		  				var test4 = floatingBox;
@@ -590,7 +590,14 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								return false;
 							}
 							if(pos <= 9) {
-								MiddleQuery();
+								if(pos >= 3 && pos <=5) {
+									MiddleQuery();
+								}else if(pos >= 6 && pos <= 8) {
+									DeepQuery();
+								}else if(pos = 9) {
+									MiddleQuery();
+								}
+								
 								setTimeout(renderQuestion, 5000);
 							}else {
 								pos = 0;
@@ -762,7 +769,7 @@ function MiddleFinalWin() {
 }
 
 //DEEP ROUND
-function deepStart() {
+function DeepStart() {
   StartLight();
   secondary.src='sounds/deep/question/start.mp3';
   secondary.volume = 1;
@@ -776,7 +783,7 @@ function DeepRound() {
   primary.load(); 
   primary.play();
 }
-function deepQuery() {
+function DeepQuery() {
   QueryLight();
   secondary.src='sounds/deep/question/answer.mp3';
   secondary.load(); 
