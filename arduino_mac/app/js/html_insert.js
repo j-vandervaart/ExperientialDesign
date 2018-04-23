@@ -135,16 +135,16 @@ var page8 =
 
 	<!--POINTS-->
 	<div id="points">
-	<div class="orange pointsNumberUp">1 MILLION PTS</div>
-	<div class="orange pointsNumber">500,000 pts</div>
-	<div class="orange pointsNumber">250,000 pts</div>
-	<div class="orange pointsNumberUp">125,000 pts</div>
-	<div class="orange pointsNumber">32,000 pts</div>
-	<div class="orange pointsNumber">8000 pts</div>
-	<div class="orange pointsNumberUp">1000 pts</div>
-	<div class="orange pointsNumber">500 pts</div>
-	<div class="orange pointsNumber">300 pts</div>
-	<div class="orange pointsNumberUp">100 pts</div></div>
+	<div class="pointsNumberUp">1 MILLION PTS</div>
+	<div class="pointsNumber">500,000 pts</div>
+	<div class="pointsNumber">250,000 pts</div>
+	<div class="pointsNumberUp">125,000 pts</div>
+	<div class="pointsNumber">32,000 pts</div>
+	<div class="pointsNumber">8000 pts</div>
+	<div class="pointsNumberUp">1000 pts</div>
+	<div class="pointsNumber">500 pts</div>
+	<div class="pointsNumber">300 pts</div>
+	<div class="pointsNumberUp">100 pts</div></div>
  
 	</div>
 
@@ -263,14 +263,6 @@ var page9 = `<div id="p9">
 $10 gift card to the Tim Hortons.</p>
 </div>`;
 
-/*Dispensing Prize*/
-
-var page10 = `<div id="p10">
-	<img class="triangleGC" src="images/triangle.png"><img clas="GC" src="images/giftcard.png"><img class="triangleGC" src="images/triangle.png">
-	<h1 class="prize">DISPENSING <br>YOUR PRIZE</h1>
-	<p class="pleaseWait">PLEASE WAIT</p>
-
-</div>`;
 
 /*Loser*/
 
