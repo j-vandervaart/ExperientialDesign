@@ -120,7 +120,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		       	game.innerHTML = pagebarcodeBad;
 		       	setTimeout(function() {
 		       		pageNumber = 0;
-		       		StopSound();
 					game.innerHTML = page1;
 		       	}, 5000);
 		        // valid.innerHTML = 'This code has already been used. The game can only be played once per card.';
@@ -150,8 +149,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 	loadpage3: function() {
   		game.innerHTML = page3;
-
-  		SpeedStart();
 	},
 
 	loadpage4: function() {
@@ -168,7 +165,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 	loadpage7: function() {
   		game.innerHTML = page7;
-  		StopSound();
 	},
 
 	loadpage12: function() {
@@ -188,8 +184,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 	loadpage8: function() {
 		game.innerHTML = page8;
-		
-		SpeedRound();
+
 		var lifeLine = true;
 		var lifeLine2 = true;
 		var lifeLine3 = true;
@@ -220,14 +215,14 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		function renderQuestion(test4, posCat, randNumCat){
 			if(pos >= 0 && pos <= 2) {
 				console.log('1');
-  				SpeedRound();
+  				SpeedStart();
 	  		}else if(pos >= 3 && pos <= 5) {
 	  			console.log('2');
-	  			MiddleRound();
+	  			MiddleStart();
 	  		}else if(pos >= 6 && pos <= 8) {
-	  			DeepRound();
+	  			DeepStart();
 	  		}else if(pos = 9) {
-	  			MillionRound();
+	  			MillionStart();
 	  		}
 			var winner = [];
 			var choice1 = document.querySelector('.st5');
@@ -237,45 +232,45 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 			winner.push(choice1, choice2, choice3, choice4);
 
 
-			buttonred.on("down", function() {
-		  		console.log('sdfsdf');
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[0].style.fill = "yellow";
-		    	var one = document.querySelector("#one0");
-		    	one.checked = true;
-		  	});
+			// buttonred.on("down", function() {
+		 //  		console.log('sdfsdf');
+		 //    	for(var i = 0; i < winner.length; i++) {
+		 //    		winner[i].style.fill = "url(#Path_8_1_)";
+		 //    	}
+		 //    	winner[0].style.fill = "yellow";
+		 //    	var one = document.querySelector("#one0");
+		 //    	one.checked = true;
+		 //  	});
 
-		  	buttonblue.on("down", function() {
+		 //  	buttonblue.on("down", function() {
 
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[1].style.fill = "yellow";
-		    	var two = document.querySelector("#one1");
-		    	two.checked = true;
-		  	});
+		 //    	for(var i = 0; i < winner.length; i++) {
+		 //    		winner[i].style.fill = "url(#Path_8_1_)";
+		 //    	}
+		 //    	winner[1].style.fill = "yellow";
+		 //    	var two = document.querySelector("#one1");
+		 //    	two.checked = true;
+		 //  	});
 
-		  	buttonyellow.on("down", function() {
+		 //  	buttonyellow.on("down", function() {
 
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[2].style.fill = "yellow";
-		    	var three = document.querySelector("#one2");
-		    	three.checked = true;
-		  	});
+		 //    	for(var i = 0; i < winner.length; i++) {
+		 //    		winner[i].style.fill = "url(#Path_8_1_)";
+		 //    	}
+		 //    	winner[2].style.fill = "yellow";
+		 //    	var three = document.querySelector("#one2");
+		 //    	three.checked = true;
+		 //  	});
 
-		  	buttongreen.on("down", function() {
+		 //  	buttongreen.on("down", function() {
 
-		    	for(var i = 0; i < winner.length; i++) {
-		    		winner[i].style.fill = "url(#Path_8_1_)";
-		    	}
-		    	winner[3].style.fill = "yellow";
-		    	var four = document.querySelector("#one3");
-		    	four.checked = true;
-		  	});
+		 //    	for(var i = 0; i < winner.length; i++) {
+		 //    		winner[i].style.fill = "url(#Path_8_1_)";
+		 //    	}
+		 //    	winner[3].style.fill = "yellow";
+		 //    	var four = document.querySelector("#one3");
+		 //    	four.checked = true;
+		 //  	});
 
 			var orange = document.querySelectorAll(".orange");
 			randNum = Math.floor(Math.random()*3);
@@ -315,6 +310,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 					pos = 0;
 					correct = 0;
 					floatingBox = 9;
+					game.innerHTML = page9;
 					// servo[servoSwitch].cw().step(5000, function() {
 		   // 			});
 		   // 			servoSwitch++;
@@ -349,11 +345,15 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 	  				buttonblack1.on("down", testFun);
 
 	  				function testFun() {
-						var fifty = document.querySelector('.fiftyfifty');
-						fifty.src = "images/5050used.png"; 
-						StopSound();
+	  					var fifty = document.querySelector('.fiftyfifty');
+	  					if(fifty) {
+	  						fifty.src = "images/5050used.png"; 
+	  					}
+						
+						
+						// StopSound();
 						setTimeout(FiftyFiftyLifeline(), 1000);
-						setTimeout(SpeedRound(), 4000);
+						// setTimeout(SpeedRound(), 4000);
 	  					
 	  					var rand1 = Math.floor(Math.random()*3);
 	  					var rand2 = Math.floor(Math.random()*3);
@@ -378,7 +378,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 						audience.src = "images/audienceused.png"; 
 						StopSound();
 						setTimeout(AudienceLifeline(), 1000);
-						setTimeout(SpeedRound(), 10000);  
+						// setTimeout(SpeedRound(), 10000);  
 		  				var test4 = floatingBox;
 		  				var posCat = pos;
 		  				var randNumCat = randNum;
@@ -511,13 +511,17 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								choice = null;
 								if(pos >= 0 && pos <= 2) {
 									console.log('1');
+									StopSound();
 					  				SpeedLose();
 						  		}else if(pos >= 3 && pos <= 5) {
 						  			console.log('2');
+						  			StopSound();
 						  			MiddleLose();
 						  		}else if(pos >= 6 && pos <= 8) {
 						  			DeepLose();
+						  			StopSound();
 						  		}else if(pos = 9) {
+						  			StopSound();
 						  			MillionLose();
 						  		}
 								setTimeout(functions[arr[8]], 5000);
@@ -539,7 +543,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 									// _("showRight").innerHTML = "right";
 								}
 								floatingBox--;
-								StopSound();
+								// StopSound();
 								if(pos >= 0 && pos <= 2) {
 									console.log('1');
 					  				SpeedWin();
@@ -555,7 +559,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 							// If the answer is WRONG
 							}else if(choice != questions[pos][randNum][5]){
-								// SpeedLose();
+								StopSound();
 								if(pos >= 0 && pos <= 2) {
 									console.log('1');
 					  				SpeedLose();
@@ -585,7 +589,20 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								
 								return false;
 							}
-							setTimeout(renderQuestion, 5000);
+							if(pos <= 9) {
+								MiddleQuery();
+								setTimeout(renderQuestion, 5000);
+							}else {
+								pos = 0;
+								correct = 0;
+								floatingBox = 9;
+								game.innerHTML = page9;
+								pageNumber = 0;
+								setTimeout(function() {
+									game.innerHTML =  page1;
+								}, 10000);
+							}
+							
 					}
 					},1000);
 				}
@@ -766,7 +783,7 @@ function deepQuery() {
   secondary.play();
   setTimeout(function(){ primary.pause(); }, 300);
 }
-function deepWin() {
+function DeepWin() {
   WinLight();
   primary.src='sounds/deep/win/main.mp3';
   primary.load(); 
@@ -783,35 +800,35 @@ function DeepLose() {
 }
 
 //Million ROUND
-function millionStart() {
+function MillionStart() {
   StartLight();
   secondary.src='sounds/million/question/start.mp3';
   secondary.volume = 1;
   secondary.load(); 
   secondary.play();
-  setTimeout(function(){millionRound(); }, 2000);
+  setTimeout(function(){MillionRound(); }, 2000);
 }
-function millionRound() {
+function MillionRound() {
   millionRoundLight();
   primary.src='sounds/million/question/main.mp3';
   primary.load(); 
   primary.play();
 }
-function millionQuery() {
+function MillionQuery() {
   QueryLight();
   secondary.src='sounds/million/question/answer.mp3';
   secondary.load(); 
   secondary.play();
   setTimeout(function(){ primary.pause(); }, 300);
 }
-function millionWin() {
+function MillionWin() {
   millionWinLight();
   primary.src='sounds/million/win/main.mp3';
   primary.load(); 
   primary.play();
   setTimeout(function(){ secondary.volume = 0; }, 800);
 }
-function millionLose() {
+function MillionLose() {
   LoseLight();
   primary.src='sounds/million/lose/main.mp3';
   primary.load(); 
