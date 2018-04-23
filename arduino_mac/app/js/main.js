@@ -420,7 +420,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[0].style.fill = "yellow";
+		    	winner[0].style.fill = "#FB8D11";
 		    	var one = document.querySelector("#one0");
 		    	one.checked = true;
 		    	timeLeft = 1;
@@ -431,7 +431,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[1].style.fill = "yellow";
+		    	winner[1].style.fill = "#FB8D11";
 		    	var two = document.querySelector("#one1");
 		    	two.checked = true;
 		    	timeLeft = 1;
@@ -442,7 +442,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[2].style.fill = "yellow";
+		    	winner[2].style.fill = "#FB8D11";
 		    	var three = document.querySelector("#one2");
 		    	three.checked = true;
 		    	timeLeft = 1;
@@ -453,7 +453,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		    	for(var i = 0; i < winner.length; i++) {
 		    		winner[i].style.fill = "url(#Path_8_1_)";
 		    	}
-		    	winner[3].style.fill = "yellow";
+		    	winner[3].style.fill = "#FB8D11";
 		    	var four = document.querySelector("#one3");
 		    	four.checked = true;
 		    	timeLeft = 1;
