@@ -261,7 +261,7 @@ var page9 = `<div id="p9">
 	<img class="triangle" src="images/triangle.png"><h1 class="winner">YOU'RE A</h1><img class="triangle" src="images/triangle.png">
 	<img class="winnerDeveloper" src="images/developer.png">
 	<p class="congratulations">Congratulations! You have won a <br> 
-$10 gift card to the Tim Hortons.</p>
+$20 gift card to the Tim Hortons.</p>
 </div>`;
 
 

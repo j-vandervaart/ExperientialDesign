@@ -1549,11 +1549,6 @@ function StopLight() {
   strip.show();
 }
 
-
-
-
-
-
  strip.on("ready", function() {
 
   console.log("Strip ready, let's go");
