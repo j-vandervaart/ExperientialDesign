@@ -81,13 +81,6 @@ body p {
     margin: 0 auto;
 }
 
-/*img.timer {
-    max-height: 10%;
-    max-width: 10%;
-}*/
-
-/*OPENING*/
-
 img.proximaLogoLarge {
     max-height: 75%;
     max-width: 75%;
@@ -240,6 +233,7 @@ img.instructionsScore {
 	color: #FB8F13;
 	text-align: center;
 	margin-top: 200px;
+  font-family: proxima-nova, sans-serif;
 }
 
 img.winnerDeveloper {
@@ -248,10 +242,10 @@ img.winnerDeveloper {
 	display: block;
     margin-left: auto;
     margin-right: auto;
-        -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadein 2s; /* Firefox < 16 */
-        -ms-animation: fadein 2s; /* Internet Explorer */
-         -o-animation: fadein 2s; /* Opera < 12.1 */
+        -webkit-animation: fadein 2s; 
+       -moz-animation: fadein 2s; 
+        -ms-animation: fadein 2s; 
+         -o-animation: fadein 2s; 
             animation: fadein 2s;
 }
 
@@ -334,7 +328,14 @@ img.triangleGC {
 
 /* YOU LOSE */
 
+#p9 {
+    font-family: proxima-nova, sans-serif;
+    text-align: center;
+    
+}
+
 #p11 {
+    font-family: proxima-nova, sans-serif;
     text-align: center;
     
 }
@@ -388,6 +389,7 @@ p.levels {
 }
 
 img.questionsField {
+  font-family: proxima-nova, sans-serif;
 	display: block;
     margin-left: 0;
     margin-right: 0;
@@ -408,6 +410,7 @@ img.questionsField {
 }
 
 #points {
+  font-family: proxima-nova, sans-serif;
 	display: inline-block;
 	color:#FFFFFF;
 	padding-left: 30px;
@@ -419,8 +422,11 @@ img.questionsField {
 }
 
 .pointsNumber {
+  font-family: proxima-nova, sans-serif;
 	display: block;
-	color: #E8A100;
+	color: #FB8D11;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #video {
@@ -432,6 +438,7 @@ img.questionsField {
 }
 
 #mainGamePlay p {
+  font-family: proxima-nova, sans-serif;
     -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
        -moz-animation: fadein 2s; /* Firefox < 16 */
         -ms-animation: fadein 2s; /* Internet Explorer */
@@ -461,37 +468,16 @@ img.questionsField {
     from { opacity: 0; }
     to   { opacity: 1; }
 }
-/*
-@keyframes fadeout {
-   from { opacity: 1; }
-   to { opacity: 0; } 
-} 
-
-@-moz-keyframes fadeout {
-   from { opacity: 1; }
-   to { opacity: 0; } 
-} 
-
-@-webkit-keyframes fadeout {
-   from { opacity: 1; }
-   to { opacity: 0; } 
-} 
-
-@-ms-keyframes fadeout {
-   from { opacity: 1; }
-   to { opacity: 0; } 
-} 
-*/
-/*# sourceMappingURL=main.css.map */
 
 /*TIMER*/
 
 #countDown {
-  color: #FFA500;
+  color: #FB8D11;
   padding-left: 100px;
   margin-bottom: 0px;
   padding-bottom: 0px;
-  font-size: 50px;
+  padding: 50px;
+  font-size: 75px;
 }
 
 #countDownAudience {
@@ -508,6 +494,7 @@ img.audienceOrangeSelection {
 }
 
 .timerText {
+  font-family: proxima-nova, sans-serif;
   font-size: 50px;
   padding-bottom: 0px;
   margin-bottom: 0px;
@@ -518,6 +505,7 @@ img.audienceOrangeSelection {
 /*Ask Audience*/
 
 #p12 {
+  font-family: proxima-nova, sans-serif;
   display: none;
   position: absolute;
   background: #000;

@@ -1,5 +1,6 @@
 var page1 = `<div id="p1">
 	<img class="proximaLogoLarge" src="images/proximalogolarge.png">
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 /*Bar Code Page*/
@@ -14,7 +15,7 @@ var page2 = `<div id="p2">
 
 var pagebarcodeGood = `<div id="p13">
 	<img class="proximaLogoSmall" src="images/proxima.png">
-	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
+	<p class="scanBarCode">PLEASE WAIT</p>
 	<img class="barCode" src="images/barcodegood.png">
 </div>`;
 
@@ -22,7 +23,7 @@ var pagebarcodeGood = `<div id="p13">
 
 var pagebarcodeBad = `<div id="p14">
 	<img class="proximaLogoSmall" src="images/proxima.png">
-	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
+	<p class="scanBarCode">BARCODE INVALID</p>
 	<img class="barCode" src="images/barcodebad.png">
 </div>`;
 
@@ -35,19 +36,19 @@ AND 4 POSSIBLE ANSWERS WILL APPEAR WITH EACH QUESTION.
 CHOOSE THE CORRECT ANSWER USING THE CORRESPONDING 
 BUTTONS ON THE PODIUM</p>
 	<img class="questionExample" src="images/questionexample.png">
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page4 = `<div id="p4">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<img class="instructionsScore" src="images/instructionsScore.png">
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page5 = `<div id="p5">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<img class="instructionsScore" src="images/timer.png">
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page6 = `<div id="p6">
@@ -61,13 +62,13 @@ USE THE CORRESPONDING BUTTONS ON THE PODIUM TO USE THEM.</p>
 <br><img class="orange" src="images/fiftyfiftyorange.png">
 
 
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page7 = `<div id="p7">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 
-	<p class="pressButtonStart">PRESS THE MAIN BUTTON 
+	<p class="pressButtonStart">PRESS EITHER BLACK BUTTON 
 <br>TO START</p>
 </div>`;
 
@@ -91,8 +92,6 @@ Your browser does not support the video tag.
 var page8 = 
 	
 	`
-
-
 	<div id="p12">
 	<img class="audienceOrangeSelection" src="images/audienceorangepage.png">
 	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
@@ -135,16 +134,16 @@ var page8 =
 
 	<!--POINTS-->
 	<div id="points">
-	<div class="orange pointsNumberUp">1 MILLION PTS</div>
-	<div class="orange pointsNumber">500,000 pts</div>
-	<div class="orange pointsNumber">250,000 pts</div>
-	<div class="orange pointsNumberUp">125,000 pts</div>
-	<div class="orange pointsNumber">32,000 pts</div>
-	<div class="orange pointsNumber">8000 pts</div>
-	<div class="orange pointsNumberUp">1000 pts</div>
-	<div class="orange pointsNumber">500 pts</div>
-	<div class="orange pointsNumber">300 pts</div>
-	<div class="orange pointsNumberUp">100 pts</div></div>
+	<div class="pointsNumberUp">1 MILLION PTS</div>
+	<div class="pointsNumber">500,000 pts</div>
+	<div class="pointsNumber">250,000 pts</div>
+	<div class="pointsNumberUp">125,000 pts</div>
+	<div class="pointsNumber">32,000 pts</div>
+	<div class="pointsNumber">8000 pts</div>
+	<div class="pointsNumberUp">1000 pts</div>
+	<div class="pointsNumber">500 pts</div>
+	<div class="pointsNumber">300 pts</div>
+	<div class="pointsNumberUp">100 pts</div></div>
  
 	</div>
 
@@ -260,17 +259,9 @@ var page9 = `<div id="p9">
 	<img class="triangle" src="images/triangle.png"><h1 class="winner">YOU'RE A</h1><img class="triangle" src="images/triangle.png">
 	<img class="winnerDeveloper" src="images/developer.png">
 	<p class="congratulations">Congratulations! You have won a <br> 
-$10 gift card to the Tim Hortons.</p>
+$20 gift card to the Tim Hortons.</p>
 </div>`;
 
-/*Dispensing Prize*/
-
-var page10 = `<div id="p10">
-	<img class="triangleGC" src="images/triangle.png"><img clas="GC" src="images/giftcard.png"><img class="triangleGC" src="images/triangle.png">
-	<h1 class="prize">DISPENSING <br>YOUR PRIZE</h1>
-	<p class="pleaseWait">PLEASE WAIT</p>
-
-</div>`;
 
 /*Loser*/
 

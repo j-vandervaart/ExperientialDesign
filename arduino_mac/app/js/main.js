@@ -1575,11 +1575,6 @@ function StopLight() {
   strip.show();
 }
 
-
-
-
-
-
  strip.on("ready", function() {
 
   PregameLight();
