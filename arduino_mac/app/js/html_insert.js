@@ -1,5 +1,6 @@
 var page1 = `<div id="p1">
 	<img class="proximaLogoLarge" src="images/proximalogolarge.png">
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 /*Bar Code Page*/
@@ -35,19 +36,19 @@ AND 4 POSSIBLE ANSWERS WILL APPEAR WITH EACH QUESTION.
 CHOOSE THE CORRECT ANSWER USING THE CORRESPONDING 
 BUTTONS ON THE PODIUM</p>
 	<img class="questionExample" src="images/questionexample.png">
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page4 = `<div id="p4">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<img class="instructionsScore" src="images/instructionsScore.png">
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page5 = `<div id="p5">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<img class="instructionsScore" src="images/timer.png">
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page6 = `<div id="p6">
@@ -61,13 +62,13 @@ USE THE CORRESPONDING BUTTONS ON THE PODIUM TO USE THEM.</p>
 <br><img class="orange" src="images/fiftyfiftyorange.png">
 
 
-	<p class="pressButton">PRESS THE MAIN BUTTON TO CONTINUE</p>
+	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
 
 var page7 = `<div id="p7">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 
-	<p class="pressButtonStart">PRESS THE MAIN BUTTON 
+	<p class="pressButtonStart">PRESS EITHER BLACK BUTTON 
 <br>TO START</p>
 </div>`;
 
