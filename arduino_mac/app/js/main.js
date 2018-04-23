@@ -37,8 +37,8 @@ var isPlaying = false;
 var game = document.querySelector("#mainGamePlay");
 
 // Array Vars for Page Changing
-var pageNumber = 0;
-var arr = ['loadpage2', 'loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
+var pageNumber = 1;
+var arr = ['loadpage1' ,'loadpage2', 'loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
 var dog;
 
 var strip = null;
@@ -64,13 +64,15 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
         controller: "FIRMATA",
     });
 
-	game.innerHTML = page1;
-
 	var functions = {
 	// loadpage1: function() {
 	// 	game.innerHTML = page1;
 	// 	StopSound();
 	// },
+
+	loadpage1: function() {
+		game.innerHTML = page1;
+	},
 
 	loadpage2: function() {
 		game.innerHTML = page2;
@@ -91,7 +93,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		var barcode = document.getElementById('barcode');
 
 		function catchcode(){
-		  console.log(this.value);
 		  var code = this.value;
 		  // title.innerHTML = 'Barcode Scan: ' + this.value;
 		  barcode.value = "";
@@ -100,27 +101,26 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		}
 
 		function checkcode(codes) {
-		    console.log('Checking code validity...');
 		    conn.query('SELECT * FROM codes {{where data}}', {
 		      data: {
 		        codes: codes
 		      }
 		    }, function (err, result) {
-		      console.log(err, result);
+		      // console.log(err, result);
 		      if (result[0]) {
 		       if(result[0].active == 0) {
 		       	game.innerHTML = pagebarcodeGood;
 		       	setTimeout(function() {
-		       		pageNumber = 3;
-				    functions[arr[2]]();
+		       		pageNumber = 4;
+				    functions[arr[3]]();
 		       	}, 5000);
 		        // valid.innerHTML = 'Code is valid. The game will now start.';
 		        updatecode(codes);
 		       } else {
 		       	game.innerHTML = pagebarcodeBad;
 		       	setTimeout(function() {
-		       		pageNumber = 0;
-					game.innerHTML = page1;
+		       		pageNumber = 1;
+					functions[arr[0]]();
 		       	}, 5000);
 		        // valid.innerHTML = 'This code has already been used. The game can only be played once per card.';
 		       }
@@ -131,7 +131,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		}
 
 		function updatecode(codes) {
-		    console.log('Updating code validity...');
 		    conn.query('UPDATE codes {{set data}} {{where find}}', {
 		      data: {
 		        active: 0
@@ -140,7 +139,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		        codes: codes
 		      },
 		    }, function (err, result) {
-		      console.log(err, result);
 		    });
 		}
 
@@ -178,7 +176,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 	loadpageIntroVideo: function() {
   		game.innerHTML = pageIntroVideo;
   		setTimeout(function() {
-  			functions[arr[7]]()
+  			functions[arr[8]]()
   		}, 100);
 	},
 
@@ -213,15 +211,13 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		// var currentPos = pos; 
 
 		function renderQuestion(test4, posCat, randNumCat){
-			if(pos = 0) {
-				console.log('1');
+			if(pos == 0) {
   				SpeedStart();
-	  		}else if(pos = 3) {
-	  			console.log('2');
+	  		}else if(pos >= 3 && pos <= 5) {
 	  			MiddleStart();
-	  		}else if(pos = 6) {
+	  		}else if(pos >= 6 && pos <= 8) {
 	  			DeepStart();
-	  		}else if(pos = 9) {
+	  		}else if(pos == 9) {
 	  			MillionStart();
 	  		}
 			var winner = [];
@@ -340,9 +336,11 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 
 				//50/50
-
+				console.log(pageNumber);
 	  			if(lifeLine == true) {
-	  				buttonblack1.on("down", testFun);
+	  				if(pageNumber == 8) {
+	  					buttonblack1.on("down", testFun);
+	  				}
 
 	  				function testFun() {
 	  					var fifty = document.querySelector('.fiftyfifty');
@@ -372,10 +370,15 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 	  			}
 
 	  			if(lifeLine2 == true) {
-		  			buttonblack2.on("down", cats2);
+	  				if(pageNumber == 8) {
+						buttonblack2.on("down", cats2);
+	  				}
+		  			
 		  			function cats2() {
 						var audience = document.querySelector('.audience');
+						if(audience) {
 						audience.src = "images/audienceused.png"; 
+						}
 						// StopSound();
 						setTimeout(AudienceLifeline(), 1000);
 						// setTimeout(SpeedRound(), 10000);  
@@ -484,6 +487,13 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 				    		lucasSucks();
 				    	}
 				    	function lucasSucks() {
+				    		if(pos >= 3 && pos <=5) {
+								MiddleQuery();
+							}else if(pos >= 6 && pos <= 8) {
+								DeepQuery();
+							}else if(pos == 9) {
+								MiddleQuery();
+							}
 				    		clearInterval(gameTimer);
 							console.log(questions[pos][randNum][5]);
 							var answer1 = document.querySelector("#one0");
@@ -506,32 +516,31 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								var selected = answer4.id.charAt(3);
 							}else{
 								pos = 0;
-								pageNumber = 0;
+								pageNumber = 1;
 								correct = 0;
 								choice = null;
 								if(pos >= 0 && pos <= 2) {
 									console.log('1');
-									StopSound();
 					  				SpeedLose();
 						  		}else if(pos >= 3 && pos <= 5) {
 						  			console.log('2');
-						  			StopSound();
 						  			MiddleLose();
 						  		}else if(pos >= 6 && pos <= 8) {
 						  			DeepLose();
-						  			StopSound();
 						  		}else if(pos = 9) {
-						  			StopSound();
 						  			MillionLose();
 						  		}
 								setTimeout(functions[arr[8]], 5000);
 								setTimeout(function() {
 									StopSound();
-									game.innerHTML = page1;
+									PregameLight();
+									pageNumber = 1;
+									functions[arr[0]]();
 								}, 10000);
 								return;
 							}
 
+							setTimeout(function() {
 							// If the answer is RIGHT
 							if(choice == questions[pos][randNum][5]){
 								correct++;
@@ -545,10 +554,8 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								floatingBox--;
 								// StopSound();
 								if(pos >= 0 && pos <= 2) {
-									console.log('1');
 					  				SpeedWin();
 						  		}else if(pos >= 3 && pos <= 5) {
-						  			console.log('2');
 						  			MiddleWin();
 						  		}else if(pos >= 6 && pos <= 8) {
 						  			DeepWin();
@@ -561,10 +568,8 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 							}else if(choice != questions[pos][randNum][5]){
 								StopSound();
 								if(pos >= 0 && pos <= 2) {
-									console.log('1');
 					  				SpeedLose();
 						  		}else if(pos >= 3 && pos <= 5) {
-						  			console.log('2');
 						  			MiddleLose();
 						  		}else if(pos >= 6 && pos <= 8) {
 						  			DeepLose();
@@ -577,26 +582,27 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								winner[selected].style.fill = "red";
 								pos = 0;
 								correct = 0;
-								pageNumber = 0;
+								pageNumber = 1;
 								floatingBox = 9;
-								setTimeout(functions[arr[8]], 5000);
+								setTimeout(functions[arr[9]](), 5000);
 								setTimeout(function() {
+									console.log('this is a test');
+									lifeLine2 = false;
+									lifeLine = false;
+									functions[arr[0]]();
+									buttonblack1.removeListener("down", testFun);
+									buttonblack2.removeListener("down", cats2);
 									StopSound();
-									game.innerHTML = page1;
-								}, 10000);
+									PregameLight();
+								}, 34000);
 								// _("showRight").innerHTML = "";
 								
 								
 								return false;
 							}
+						
 							if(pos <= 9) {
-								if(pos >= 3 && pos <=5) {
-									MiddleQuery();
-								}else if(pos >= 6 && pos <= 8) {
-									DeepQuery();
-								}else if(pos = 9) {
-									MiddleQuery();
-								}
+								
 								
 								setTimeout(renderQuestion, 5000);
 							}else {
@@ -604,12 +610,13 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								correct = 0;
 								floatingBox = 9;
 								game.innerHTML = page9;
-								pageNumber = 0;
+								pageNumber = 1;
 								setTimeout(function() {
-									game.innerHTML =  page1;
-								}, 10000);
+									PregameLight();
+									functions[arr[0]]();
+								}, 26000);
 							}
-							
+							}, 3000);
 					}
 					},1000);
 				}
@@ -617,6 +624,8 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 			renderQuestion();
 		}
 	}
+
+	functions[arr[0]]();
 
 var buttonred = new five.Button({
 	pin:2,
@@ -667,17 +676,33 @@ var buttonblack2 = new five.Button({
 //     console.log("done");
 //   });
 // }
-
 buttonblack1.on("down", function() {
-  	if(pageNumber < 1) { 
-  		functions[arr[pageNumber++]]();
-  	}else if(pageNumber >= 2 && pageNumber <= 6) {
-  		functions[arr[pageNumber++]]();
-  	}
-  });
+	if(pageNumber < 2) {
+		functions[arr[pageNumber++]]();
+	}else if(pageNumber >=3 && pageNumber < 8) {
+		functions[arr[pageNumber++]]();
+	}
+  	
+});
+buttonblack2.on("down", function()  {
+	if(pageNumber < 2) {
+		functions[arr[pageNumber++]]();
+	}else if(pageNumber >=3 && pageNumber < 8) {
+		functions[arr[pageNumber++]]();
+	}
+  	
+});
+
+
+
+
 
 // buttonblack2.on("up", function() {
 //   });
+var primary = document.getElementById("primary");
+var secondary = document.getElementById("secondary");
+var isPlaying = false;
+
 
 function SpeedStart() {
   secondary.src='sounds/speed/question/start.mp3';
@@ -873,9 +898,6 @@ function StopSound() {
   secondary.pause();
 }
 //ESSENTIAL SOUND AUDIO 
-var primary = document.getElementById("primary");
-var secondary = document.getElementById("secondary");
-var isPlaying = false;
 
 
 
@@ -1280,6 +1302,8 @@ function MiddleRoundLight() {
 function AudienceLifelineLight() {
 //   PixelRando=false;
 //   PixelRando2 = false;
+	console.trace();
+	console.log(this);
   var active;
   if (PixelForward) {
     active = 1;
@@ -1451,6 +1475,8 @@ colorLoop();
 }
 
 function FiftyFiftyLight() {
+	console.trace();
+	console.log(this);
   var active;
   if (PixelForward) {
     active = 1;
@@ -1556,7 +1582,6 @@ function StopLight() {
 
  strip.on("ready", function() {
 
-  console.log("Strip ready, let's go");
   PregameLight();
   // var colors = ["blue", "blue", "blue", "blue", "blue", "blue", "white"];
 
