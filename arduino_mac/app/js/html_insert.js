@@ -15,7 +15,7 @@ var page2 = `<div id="p2">
 
 var pagebarcodeGood = `<div id="p13">
 	<img class="proximaLogoSmall" src="images/proxima.png">
-	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
+	<p class="scanBarCode">PLEASE WAIT</p>
 	<img class="barCode" src="images/barcodegood.png">
 </div>`;
 
@@ -23,7 +23,7 @@ var pagebarcodeGood = `<div id="p13">
 
 var pagebarcodeBad = `<div id="p14">
 	<img class="proximaLogoSmall" src="images/proxima.png">
-	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
+	<p class="scanBarCode">BARCODE INVALID</p>
 	<img class="barCode" src="images/barcodebad.png">
 </div>`;
 
@@ -92,8 +92,6 @@ Your browser does not support the video tag.
 var page8 = 
 	
 	`
-
-
 	<div id="p12">
 	<img class="audienceOrangeSelection" src="images/audienceorangepage.png">
 	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
