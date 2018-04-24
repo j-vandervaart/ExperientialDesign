@@ -9,6 +9,7 @@ var page2 = `<div id="p2">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 	<p class="scanBarCode">SCAN YOUR BARCODE TO PLAY</p>
 	<img class="barCode" src="images/barcode.png">
+	<input type="text" id="barcode" name="barcode" autofocus>
 </div>`;
 
 /*Bar code good page*/
@@ -54,13 +55,7 @@ var page5 = `<div id="p5">
 var page6 = `<div id="p6">
 	<img class="proximaLogoSmall" src="images/proxima.png">
 
-	<p class="lifeLine">YOU HAVE TWO LIFELINES THAT YOU CAN USE ONCE AT ANY TIME.
-USE THE CORRESPONDING BUTTONS ON THE PODIUM TO USE THEM.</p>
-
-<br><img class="orange" src="images/audienceorange.png">
-
-<br><img class="orange" src="images/fiftyfiftyorange.png">
-
+	<img class="lifelineChunk" src="images/lifelines.png">
 
 	<p class="pressButton">PRESS EITHER BLACK BUTTON TO CONTINUE</p>
 </div>`;
@@ -97,7 +92,7 @@ var page8 =
 	<h1 class="askAudienceH1">ASK THE AUDIENCE</h1>
 	<p>You have 1 minute to ask your peers</p>
 
-	<p class="timerText"><span id="countDownAudience">60</span></p>
+	<p class="timerText"><span id="countDownAudience">30</span></p>
 
 	</div>
 
@@ -109,6 +104,7 @@ var page8 =
 
 		<p class="timerText"><span id="countDown">25</span></p>
 
+	<section id="gamePlay">
 	<!--ASK AUDIENCE-->
 
 	<img class="audience" src="images/audience.svg">
@@ -134,20 +130,22 @@ var page8 =
 
 	<!--POINTS-->
 	<div id="points">
-	<div class="pointsNumberUp">1 MILLION PTS</div>
-	<div class="pointsNumber">500,000 pts</div>
-	<div class="pointsNumber">250,000 pts</div>
-	<div class="pointsNumberUp">125,000 pts</div>
-	<div class="pointsNumber">32,000 pts</div>
-	<div class="pointsNumber">8000 pts</div>
-	<div class="pointsNumberUp">1000 pts</div>
-	<div class="pointsNumber">500 pts</div>
-	<div class="pointsNumber">300 pts</div>
-	<div class="pointsNumberUp">100 pts</div></div>
+	<div class="orange pointsNumberUp">1 MILLION PTS</div>
+	<div class="orange pointsNumber">500,000 pts</div>
+	<div class="orange pointsNumber">250,000 pts</div>
+	<div class="orange pointsNumberUp">125,000 pts</div>
+	<div class="orange pointsNumber">32,000 pts</div>
+	<div class="orange pointsNumber">8000 pts</div>
+	<div class="orange pointsNumberUp">1000 pts</div>
+	<div class="orange pointsNumber">500 pts</div>
+	<div class="orange pointsNumber">300 pts</div>
+	<div class="orange pointsNumberUp">100 pts</div></div>
  
 	</div>
 
 	</div>
+
+	</section>
 
 
 	<!--QUESTIONS-->
@@ -227,23 +225,23 @@ var page8 =
 		s24.8-26.7,24.8-26.7L-2156.6,4974L-2156.6,4974z"/>
 </g>
 <rect x="331" y="32.4" class="st6" width="1188.2" height="110"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="-142" width="800">    
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="-162" width="800">    
                     <div id="text1" style="font-size: 30px; color: white">I'm the question</div>                
             </foreignobject>
 <rect x="398" y="226" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="3" width="400">    
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="3" width="550">    
                     <div id="text2" style="font-size: 30px; color: white">I'm answer one</div>                
             </foreignobject>
 <rect x="398" y="337" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="110" width="400">    
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="9" y="110" width="550">    
                     <div id="text3" style="font-size: 30px; color: white">I'm answer two</div>                
             </foreignobject>
 <rect x="1043.8" y="226" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="651" y="3" width="400">    
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="651" y="3" width="550">    
                     <div id="text4" style="font-size: 30px; color: white">I'm answer three</div>                
             </foreignobject>
 <rect x="1043.8" y="339" class="st6" width="792" height="200"/>
-			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="651" y="110" width="400">    
+			<foreignobject class="node" transform="matrix(1 0 0 1 398 205)" x="651" y="110" width="550">    
                     <div id="text5" style="font-size: 30px; color: white">I'm answer four</div>                
             </foreignobject>
 </svg>
@@ -256,18 +254,18 @@ var page8 =
 /*Winner*/
 
 var page9 = `<div id="p9">
-	<img class="triangle" src="images/triangle.png"><h1 class="winner">YOU'RE A</h1><img class="triangle" src="images/triangle.png">
-	<img class="winnerDeveloper" src="images/developer.png">
+	<section id="winningSection"><img class="triangle" src="images/triangle.png"><h1 class="winner">YOU'RE A</h1><img class="triangle" src="images/triangle.png">
+	<img class="winnerDeveloper" src="images/developer.png"></section>
 	<p class="congratulations">Congratulations! You have won a <br> 
-$20 gift card to the Tim Hortons.</p>
+$20 gift card to the Tim Hortons. Return at 9PM to claim your prize!</p>
 </div>`;
 
 
 /*Loser*/
 
 var page11 = `<div id="p11">
-	<img class="triangle" src="images/triangle.png"><h1 class="winner">YOU LOSE</h1><img class="triangle" src="images/triangle.png">
+	<section id="losingSection"><img class="triangle" src="images/triangle.png"><h1 class="winner">YOU LOSE</h1><img class="triangle" src="images/triangle.png">
 	<p class="congratulations">Unfortunately you cannot call 
 <br>yourself a developer today.
-<br>But better luck next time!</p>
+<br>But better luck next time!</p></section>
 </div>`;

@@ -40,9 +40,15 @@ var game = document.querySelector("#mainGamePlay");
 var pageNumber = 1;
 var arr = ['loadpage1' ,'loadpage2', 'loadpage3', 'loadpage4', 'loadpage5', 'loadpage6', 'loadpage7', 'loadpageIntroVideo', 'loadpage8', 'loadpage11'];
 var dog;
+var flag;
 
 var strip = null;
 var fps = 20; 
+
+
+//ADD AS GLOBAL
+var currentpin;
+game.innerHTML = page1;
 
 // Load in page One
 // var ports = [
@@ -72,6 +78,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 	loadpage1: function() {
 		game.innerHTML = page1;
+		flag = true;
 	},
 
 	loadpage2: function() {
@@ -91,6 +98,8 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		// var title = document.getElementById('title');
 		// var valid = document.getElementById('valid');
 		var barcode = document.getElementById('barcode');
+		barcode.autofocus;
+		barcode.focus();
 
 		function catchcode(){
 		  var code = this.value;
@@ -109,6 +118,8 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 		      // console.log(err, result);
 		      if (result[0]) {
 		       if(result[0].active == 0) {
+		       	//ADD INTO CHECK
+				currentpin = codes;
 		       	game.innerHTML = pagebarcodeGood;
 		       	setTimeout(function() {
 		       		pageNumber = 4;
@@ -175,9 +186,10 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 
 	loadpageIntroVideo: function() {
   		game.innerHTML = pageIntroVideo;
+  		IntroLight();
   		setTimeout(function() {
   			functions[arr[8]]()
-  		}, 100);
+  		}, 25000);
 	},
 
 	loadpage8: function() {
@@ -346,6 +358,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 	  					var fifty = document.querySelector('.fiftyfifty');
 	  					if(fifty) {
 	  						fifty.src = "images/5050used.png"; 
+	  						fifty.style.opacity = "0.3";
 	  					}
 						
 						
@@ -378,6 +391,7 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 						var audience = document.querySelector('.audience');
 						if(audience) {
 						audience.src = "images/audienceused.png"; 
+						audience.style.opacity = "0.3";
 						}
 						// StopSound();
 						setTimeout(AudienceLifeline(), 1000);
@@ -515,9 +529,6 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								choice = answer4.value;
 								var selected = answer4.id.charAt(3);
 							}else{
-								pos = 0;
-								pageNumber = 1;
-								correct = 0;
 								choice = null;
 								if(pos >= 0 && pos <= 2) {
 									console.log('1');
@@ -530,12 +541,19 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 						  		}else if(pos = 9) {
 						  			MillionLose();
 						  		}
-								setTimeout(functions[arr[8]], 5000);
+						  		buttonblack1.removeListener("down", testFun);
+								buttonblack2.removeListener("down", cats2);
+								setTimeout(functions[arr[9]], 5000);
 								setTimeout(function() {
+									lifeLine2 = false;
+									lifeLine = false;
+									pos = 0;
+									correct = 0;
+									pageNumber = 1;
+									floatingBox = 9;
+									functions[arr[0]]();
 									StopSound();
 									PregameLight();
-									pageNumber = 1;
-									functions[arr[0]]();
 								}, 10000);
 								return;
 							}
@@ -553,9 +571,9 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								}
 								floatingBox--;
 								// StopSound();
-								if(pos >= 0 && pos <= 2) {
+								if(pos >= 0 && pos < 2) {
 					  				SpeedWin();
-						  		}else if(pos >= 3 && pos <= 5) {
+						  		}else if(pos >= 2 && pos <= 5) {
 						  			MiddleWin();
 						  		}else if(pos >= 6 && pos <= 8) {
 						  			DeepWin();
@@ -576,6 +594,8 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 						  		}else if(pos = 9) {
 						  			MillionLose();
 						  		}
+						  		buttonblack1.removeListener("down", testFun);
+								buttonblack2.removeListener("down", cats2);
 								for(var i = 0; i < winner.length; i++) {
 									winner[i].style.fill = "url(#Path_8_1_)";
 				    			}	
@@ -584,21 +604,22 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								correct = 0;
 								pageNumber = 1;
 								floatingBox = 9;
+								
+								flag = false;
 								setTimeout(functions[arr[9]](), 5000);
 								setTimeout(function() {
 									console.log('this is a test');
 									lifeLine2 = false;
 									lifeLine = false;
+									pageNumber = 1;
 									functions[arr[0]]();
-									buttonblack1.removeListener("down", testFun);
-									buttonblack2.removeListener("down", cats2);
 									StopSound();
 									PregameLight();
 								}, 34000);
 								// _("showRight").innerHTML = "";
 								
 								
-								return false;
+								return;
 							}
 						
 							if(pos <= 9) {
@@ -606,11 +627,27 @@ new five.Boards(["A", "B", "C"]).on("ready", function(){
 								
 								setTimeout(renderQuestion, 5000);
 							}else {
+
+								 // console.log(‘Creating Winner...’);
+								 conn.query('UPDATE codes {{set data}} {{where find}}', {
+								   data: {
+								     winner: 1
+								   },
+								   find: {
+								     codes: currentpin
+								   },
+								 }, function (err, result) {
+								   currentpin = '';
+								   console.log(err, result);
+								 });
+
 								pos = 0;
 								correct = 0;
 								floatingBox = 9;
 								game.innerHTML = page9;
 								pageNumber = 1;
+								buttonblack1.removeListener("down", testFun);
+								buttonblack2.removeListener("down", cats2);
 								setTimeout(function() {
 									PregameLight();
 									functions[arr[0]]();
@@ -676,22 +713,21 @@ var buttonblack2 = new five.Button({
 //     console.log("done");
 //   });
 // }
-buttonblack1.on("down", function() {
+
+function dogz() {
+	if(flag == true) {
 	if(pageNumber < 2) {
 		functions[arr[pageNumber++]]();
 	}else if(pageNumber >=3 && pageNumber < 8) {
 		functions[arr[pageNumber++]]();
 	}
-  	
-});
-buttonblack2.on("down", function()  {
-	if(pageNumber < 2) {
-		functions[arr[pageNumber++]]();
-	}else if(pageNumber >=3 && pageNumber < 8) {
-		functions[arr[pageNumber++]]();
 	}
-  	
-});
+}
+
+buttonblack1.on("down", dogz);
+buttonblack2.on("down", dogz);
+
+
 
 
 
@@ -878,11 +914,11 @@ function EndingCredit() {
 }
 function AudienceLifeline() {
   AudienceLifelineLight();
-  secondary.src='sounds/other/audience.mp3';
+  secondary.src='sounds/other/audeincenew.mp3';
   secondary.load(); 
   secondary.play();
   primary.volume = 0.1;
-  setTimeout(function(){ primary.volume = 1; }, 61000);
+  setTimeout(function(){ primary.volume = 1; }, 32000);
 }
 function FiftyFiftyLifeline() {
   FiftyFiftyLight();
@@ -1339,7 +1375,7 @@ function AudienceLifelineLight() {
       strip.pixel(i).color('purple');            
    }  
     strip.show();     
- }, 30000);
+ }, 30500);
 
  setTimeout(function () {    
   if (active === 1) {
@@ -1351,7 +1387,7 @@ function AudienceLifelineLight() {
   }else if(active === 4) {
     millionRoundLight();
   }
-}, 30500);
+}, 31000);
 
 }
 

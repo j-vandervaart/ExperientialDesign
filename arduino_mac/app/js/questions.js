@@ -22,7 +22,7 @@ var questions = [
     [
         ["Which is NOT a server-side scripting language", "PHP", "PHYTHON", "HAML", "Javascript", "C"],
         ["The PHP syntax is most similar to:", "Perl and C", "Javascript", "VBScript", "Java", "A"],
-        ["In Node.js, which of the following commands will show all of the modules installed globally?", "$ npm Is -g", "$ npm I", "$ node Is -g", "$ node Is -g", "A"]
+        ["In Node.js, which of the following commands will show all of the modules installed globally?", "$ npm ls -g", "$ npm ls", "$ node ls -g", "$ node -g", "A"]
     ],
     [
         ["Which of the following is NOT a valid comment in PHP", "*/echo 'comment';/*", "//echo 'comment';", "/*echo 'comment';*/", "# echo 'comment';", "B"],
